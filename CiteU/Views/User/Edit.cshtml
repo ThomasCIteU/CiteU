@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "La page des utilisateurs";
+}
+@model CiteU.Models.User.UserEditViewModel
+<h1>@Model.CurrentUser.Nom @Model.CurrentUser.Prenom</h1>
+
+
+<form asp-controller="User" asp-action="Edit" method="post" class="container">
+    <input type="hidden" asp-for="CurrentUser.IdUser" />
+    <div class="input-group">
+        <label asp-for="CurrentUser.Nom">Nom</label>
+        <input asp-for="CurrentUser.Nom" class="form-control" />
+    </div>
+    <div class="input-group">
+        <label asp-for="CurrentUser.Prenom">Prenom</label>
+        <input asp-for="CurrentUser.Prenom" class="form-control" />
+    </div>
+    <div class="input-group">
+        <label asp-for="CurrentUser.Mail">Mail</label>
+        <input asp-for="CurrentUser.Mail" class="form-control" />
+    </div>
+    <div class="input-group">
+        <label asp-for="CurrentUser.Phone">Phone</label>
+        <input asp-for="CurrentUser.Phone" class="form-control" />
+    </div>
+    <div class="input-group">
+        <label asp-for="CurrentUser.Privilege">Privilege</label>
+        <input asp-for="CurrentUser.Privilege" class="form-control" />
+    </div>
+    <div class="input-group">
+        <label asp-for="CurrentUser.Sexe">Sexe</label>
+        <input asp-for="CurrentUser.Sexe" class="form-control" />
+    </div>
+    <div class="input-group">
+        <label asp-for="CurrentUser.Assemblee">Assemblée</label>
+        <input asp-for="CurrentUser.Assemblee" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Valider</button>
+</form>
