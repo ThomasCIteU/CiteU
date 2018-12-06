@@ -51,7 +51,8 @@ namespace CiteU.Controllers
             var vm = new PoleEditViewModel()
             {
                 CurrentPole = _poleRepository.GetPole(IdPole), 
-                AllUsers = _userRepository.GetUsers()
+                AllUsers = _userRepository.GetUsers(),
+                IsCreation = false
             };
             return View("edit", vm);
         }
@@ -61,6 +62,26 @@ namespace CiteU.Controllers
         {
             var pole = Pole.CurrentPole;
             _poleRepository.EditPole(pole.IdPole, pole.Libelle, pole.IdResponsable, pole.IdAdjoint);
+
+            return RedirectToAction("Index", "Pole", pole.IdPole);
+        }
+
+        [HttpPost]
+        public IActionResult CreatePage()
+        {
+            var vm = new PoleEditViewModel()
+            {
+                AllUsers = _userRepository.GetUsers(),
+                IsCreation = true
+            };
+            return View("edit", vm);
+        }
+
+        [HttpPost]
+        public IActionResult Create(PoleEditViewModel Pole)
+        {
+            var pole = Pole.CurrentPole;
+            _poleRepository.CreatePole(pole.Libelle, pole.IdResponsable, pole.IdAdjoint);
 
             return RedirectToAction("Index", "Pole", pole.IdPole);
         }

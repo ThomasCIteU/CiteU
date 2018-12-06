@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DatabaseAccess.Langue;
 using DatabaseAccess.Pole;
 using DatabaseAccess.User;
 using Microsoft.AspNetCore.Builder;
@@ -35,6 +36,7 @@ namespace CiteU
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IPoleRepository, PoleRepository>();
+            services.AddTransient<ILangueRepository, LangueRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

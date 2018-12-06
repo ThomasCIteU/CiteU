@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CiteU.Models.Pole
 {
-    public class PoleEditViewModel
+    public class PoleEditViewModel : EditorPageViewModel
     {
         public PoleModel CurrentPole {get; set;}
         public List<UserModel> AllUsers {get; set;}

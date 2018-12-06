@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Création d'une langue";
+}
+@model CiteU.Models.Langue.LangueEditViewModel
+<h1>@(Model.IsCreation ? "Création d'une langue" : Model.CurrentLangue.Nom)</h1>
+
+
+<form asp-controller="Langue" asp-action="@(Model.IsCreation ? "Create" : "Edit")" method="post" class="container">
+    @if (!Model.IsCreation)
+    {
+        <input type="hidden" asp-for="CurrentLangue.IdLangue" />
+    }
+    <div class="input-group">
+        <label asp-for="CurrentLangue.Nom">Nom</label>
+        <input asp-for="CurrentLangue.Nom" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Valider</button>
+
+</form>
+@if (!Model.IsCreation)
+{
+    <form asp-controller="Langue" asp-action="Delete" method="post">
+        <input type="hidden" name="@nameof(Model.CurrentLangue.IdLangue)" value="@Model.CurrentLangue.IdLangue" />
+        <button type="submit" class="btn btn-danger">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </button>
+    </form>
+}

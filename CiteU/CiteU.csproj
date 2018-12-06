@@ -17,6 +17,12 @@
     <Content Update="Views\Planning\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Langue\Edit.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Langue\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Pole\Edit.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

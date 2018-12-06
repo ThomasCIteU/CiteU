@@ -119,5 +119,29 @@ namespace DatabaseAccess.Pole
                 throw ex;
             }
         }
+
+        public void CreatePole(string libelle, int idResponsable, int idAdjoint)
+        {
+            MySqlConnection cnn = BDDRepository.OpenConnexion();
+            try
+            {
+                string sql = $"INSERT INTO Pole (Libelle, IdResponsable, IdAdjoint) VALUES( " +
+                    $"@Libelle, " +
+                    $"@IdResponsable, " +
+                    $"@IdAdjoint)";
+
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@Libelle", libelle);
+                cmd.Parameters.AddWithValue("@IdResponsable", idResponsable);
+                cmd.Parameters.AddWithValue("@IdAdjoint", idAdjoint);
+
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

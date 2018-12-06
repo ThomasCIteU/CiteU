@@ -3,7 +3,9 @@
 }
 @model CiteU.Models.Pole.PolesViewModel
 <h1>Les pôles</h1>
-
+<form asp-controller="Pole" asp-action="CreatePage" method="post">
+    <button type="submit" class="btn btn-default">Ajouter un pôle</button>
+</form>
 <table class="table table-striped table-hover">
     <tr>
         <th>Nom du pôle</th>

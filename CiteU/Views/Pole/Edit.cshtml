@@ -1,12 +1,15 @@
 ﻿@{
-    ViewData["Title"] = "La page des utilisateurs";
+    ViewData["Title"] = "La page des pôles";
 }
 @model CiteU.Models.Pole.PoleEditViewModel
-<h1>@Model.CurrentPole.Libelle</h1>
+<h1>@(Model.IsCreation ? "Création d'un pôle" : Model.CurrentPole.Libelle)</h1>
 
 
-<form asp-controller="Pole" asp-action="Edit" method="post" class="container">
-    <input type="hidden" asp-for="CurrentPole.IdPole" />
+<form asp-controller="Pole" asp-action="@(Model.IsCreation ? "Create" : "Edit")" method="post" class="container">
+    @if (!Model.IsCreation)
+    {
+        <input type="hidden" asp-for="CurrentPole.IdPole" />
+    }
     <div class="input-group">
         <label asp-for="CurrentPole.Libelle">Nom</label>
         <input asp-for="CurrentPole.Libelle" class="form-control" />
@@ -33,9 +36,12 @@
     <button type="submit" class="btn btn-success">Valider</button>
 
 </form>
-<form asp-controller="Pole" asp-action="Delete" method="post">
-    <input type="hidden" name="@nameof(Model.CurrentPole.IdPole)" value="@Model.CurrentPole.IdPole" />
-    <button type="submit" class="btn btn-danger">
-        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-    </button>
-</form>
+@if (!Model.IsCreation)
+{
+    <form asp-controller="Pole" asp-action="Delete" method="post">
+        <input type="hidden" name="@nameof(Model.CurrentPole.IdPole)" value="@Model.CurrentPole.IdPole" />
+        <button type="submit" class="btn btn-danger">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </button>
+    </form>
+}
