@@ -45,7 +45,7 @@ namespace CiteU.Controllers
             return View(vm);
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult EditPage(int IdPole)
         {
             var vm = new PoleEditViewModel()

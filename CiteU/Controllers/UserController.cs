@@ -28,7 +28,7 @@ namespace CiteU.Controllers
             return View(vm);
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult EditPage(int IdUser)
         {
             var vm = new UserEditViewModel()
