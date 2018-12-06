@@ -8,14 +8,15 @@ using DatabaseAccess.BDD;
 
 namespace DatabaseAccess.User
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         public List<UserModel> GetUsers()
         {
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = "SELECT * FROM User";
+                string sql = "SELECT U.idUser, U.Nom, U.Prenom, U.Sexe, U.Mail, U.Phone, A.Nom as NomAssemblee, U.Privilege FROM User U " +
+                    "LEFT JOIN assemblee A ON U.Assemblee = A.idAssemblee";
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 MySqlDataReader rdr = cmd.ExecuteReader();
                 var listUsers = new List<UserModel>();
@@ -30,7 +31,7 @@ namespace DatabaseAccess.User
                         Sexe = Convert.ToChar(rdr["Sexe"]),
                         Mail = rdr["Mail"].ToString(),
                         Phone = rdr["Phone"].ToString(),
-                        Assemblee = rdr["Assemblee"].ToString(),
+                        Assemblee = rdr["NomAssemblee"].ToString(),
                         Privilege = rdr["Privilege"].ToString()
                         }
                     );
@@ -106,6 +107,25 @@ namespace DatabaseAccess.User
                 cmd.Parameters.AddWithValue("@Phone", Phone);
                 cmd.Parameters.AddWithValue("@Assemblee", Assemblee);
                 cmd.Parameters.AddWithValue("@Privilege", Privilege);
+                cmd.Parameters.AddWithValue("@idUser", IdUser);
+
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void DeleteUser(int IdUser)
+        {
+            MySqlConnection cnn = BDDRepository.OpenConnexion();
+            try
+            {
+                string sql = $"Delete from user " +
+                    $"WHERE idUser=@idUser";
+
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@idUser", IdUser);
 
                 cmd.ExecuteNonQuery();

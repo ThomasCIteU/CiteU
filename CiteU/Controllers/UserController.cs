@@ -12,24 +12,28 @@ namespace CiteU.Controllers
 {
     public class UserController : Controller
     {
+        public readonly IUserRepository _userRepository;
+        public UserController (IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
-            var e = new UserRepository();
             var vm = new UserViewModel()
             {
-                ListUsers = e.GetUsers()
+                ListUsers = _userRepository.GetUsers()
             };
             return View(vm);
         }
 
         [HttpPost]
-        public IActionResult Index(int IdUser)
+        public IActionResult EditPage(int IdUser)
         {
-            var e = new UserRepository();
             var vm = new UserEditViewModel()
             {
-                CurrentUser = e.GetUser(IdUser)
+                CurrentUser = _userRepository.GetUser(IdUser)
             };
             return View("edit", vm);
         }
@@ -38,15 +42,18 @@ namespace CiteU.Controllers
         //public IActionResult Edit(int IdUser, string Nom, string Prenom, char Sexe, string Mail, string Phone, string Assemblee, string Privilege)
         public IActionResult Edit(UserEditViewModel user)
         {
-            var e = new UserRepository();
             var usr = user.CurrentUser;
-            e.EditUser(usr.IdUser, usr.Nom, usr.Prenom, usr.Sexe, usr.Mail, usr.Phone, usr.Assemblee, usr.Privilege);
+            _userRepository.EditUser(usr.IdUser, usr.Nom, usr.Prenom, usr.Sexe, usr.Mail, usr.Phone, usr.Assemblee, usr.Privilege);
 
-            var vm = new UserEditViewModel()
-            {
-                CurrentUser = e.GetUser(usr.IdUser)
-            };
-            return View("get", vm);
+            return RedirectToAction("Index", "User", usr.IdUser);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int IdUser)
+        {
+            _userRepository.DeleteUser(IdUser);
+
+            return RedirectToAction("Index", "User");
         }
     }
 }

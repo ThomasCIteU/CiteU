@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "La page des utilisateurs";
+}
+@model CiteU.Models.Pole.PoleEditViewModel
+<h1>@Model.CurrentPole.Libelle</h1>
+
+
+<form asp-controller="Pole" asp-action="Edit" method="post" class="container">
+    <input type="hidden" asp-for="CurrentPole.IdPole" />
+    <div class="input-group">
+        <label asp-for="CurrentPole.Libelle">Nom</label>
+        <input asp-for="CurrentPole.Libelle" class="form-control" />
+    </div>
+    <div class="input-group">
+        <label asp-for="CurrentPole.IdResponsable">Responsable</label>
+        <select asp-for="CurrentPole.IdResponsable" class="form-control">
+            @foreach (var user in Model.AllUsers)
+            {
+                <option value="@user.IdUser">@user.Nom @user.Prenom</option>
+            }
+        </select>
+    </div>
+    <div class="input-group">
+        <label asp-for="CurrentPole.IdAdjoint">Adjoint</label>
+        <select asp-for="CurrentPole.IdAdjoint" class="form-control">
+            @foreach (var user in Model.AllUsers)
+            {
+                <option value="@user.IdUser">@user.Nom @user.Prenom</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Valider</button>
+
+</form>
+<form asp-controller="Pole" asp-action="Delete" method="post">
+    <input type="hidden" name="@nameof(Model.CurrentPole.IdPole)" value="@Model.CurrentPole.IdPole" />
+    <button type="submit" class="btn btn-danger">
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+    </button>
+</form>

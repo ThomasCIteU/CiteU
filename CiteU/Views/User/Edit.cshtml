@@ -38,3 +38,9 @@
 
     <button type="submit" class="btn btn-success">Valider</button>
 </form>
+<form asp-controller="User" asp-action="Delete" method="post">
+    <input type="hidden" name="@nameof(Model.CurrentUser.IdUser)" value="@Model.CurrentUser.IdUser" />
+    <button type="submit" class="btn btn-danger">
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+    </button>
+</form>
