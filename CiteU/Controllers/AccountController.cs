@@ -23,6 +23,7 @@ namespace CiteU.Controllers
             _loginRepository = loginRepository;
         }
 
+        [AllowAnonymous]
         [Route("/Account/Login")]
         [HttpGet]
         public IActionResult Index(string message = "")
@@ -43,13 +44,15 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public async Task<IActionResult> Logout ()
+        [Authorize]
+        public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme);
