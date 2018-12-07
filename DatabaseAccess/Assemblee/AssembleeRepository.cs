@@ -6,70 +6,87 @@ using DatabaseAccess.BDD;
 
 
 
-namespace DatabaseAccess.User
+namespace DatabaseAccess.Assemblee
 {
-    public class AssembleeRepository
+    public class AssembleeRepository : IAssembleeRepository
     {
-        //public List<AssembleeModel> GetAssemblee()
-        //{
-        //    MySqlConnection cnn = BDDRepository.OpenConnexion();
-        //    try
-        //    {
-        //        string sql = "SELECT * FROM User";
-        //        MySqlCommand cmd = new MySqlCommand(sql, cnn);
-        //        MySqlDataReader rdr = cmd.ExecuteReader();
-        //        var listUsers = new List<AssembleeModel>();
-        //        while (rdr.Read())
-        //        {
-        //            listUsers.Add(
-        //                new AssembleeModel()
-        //                {   
-        //                IdUser = Convert.ToInt16(rdr["idUser"]),
-        //                Nom = rdr["Nom"].ToString(),
-        //                Prenom = rdr["Prenom"].ToString(),
-        //                Sexe = Convert.ToChar(rdr["Sexe"]),
-        //                Mail = rdr["Mail"].ToString(),
-        //                Phone = rdr["Phone"].ToString(),
-        //                Assemblee = rdr["Assemblee"].ToString(),
-        //                Privilege = rdr["Privilege"].ToString()
-        //                }
-        //            );
-        //        }
-        //        rdr.Close();
-
-        //        return listUsers;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
-
-        
-        public void EditAssemblee(int IdUser, string Nom, string Prenom, char Sexe, string Mail, string Phone, string Assemblee, string Privilege)
+        public List<AssembleeModel> GetAssemblees()
         {
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = $"UPDATE user SET " +
+                string sql = "SELECT * FROM assemblee";
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                var listAssembblee = new List<AssembleeModel>();
+                while (rdr.Read())
+                {
+                    listAssembblee.Add(
+                        new AssembleeModel()
+                        {
+                            IdAssemblee = Convert.ToInt16(rdr["idassemblee"]),
+                            Nom = rdr["Nom"].ToString(),
+                            IdPole = Convert.ToInt16(rdr["IdPole"])
+                        }
+                    );
+                }
+                rdr.Close();
+
+                return listAssembblee;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public AssembleeModel GetAssemblee(int idAssemblee)
+        {
+            MySqlConnection cnn = BDDRepository.OpenConnexion();
+            try
+            {
+                string sql = "SELECT * FROM Assemblee WHERE idAssemblee=@idAssemblee";
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@idAssemblee", idAssemblee);
+                MySqlDataReader rdrAssemblee = cmd.ExecuteReader();
+                AssembleeModel Assemblee = null;
+                if (rdrAssemblee.Read())
+                {
+                    Assemblee = new AssembleeModel()
+                    {
+                        IdAssemblee = Convert.ToInt16(rdrAssemblee["idAssemblee"]),
+                        Nom = rdrAssemblee["Nom"].ToString(),
+                        IdPole = Convert.ToInt16(rdrAssemblee["IdPole"])
+                    };
+                }
+                rdrAssemblee.Close();
+
+                if (Assemblee == null)
+                {
+                    throw new Exception("Cette assemblée n'existe pas");
+                }
+                return Assemblee;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void EditAssemblee(int IdAssemblee, string nom, int idPole)
+        {
+            MySqlConnection cnn = BDDRepository.OpenConnexion();
+            try
+            {
+                string sql = $"UPDATE assemblee SET " +
                     $"Nom = @Nom, " +
-                    $"Prenom = @Prenom, " +
-                    $"Sexe = @Sexe, " +
-                    $"Mail = @Mail, " +
-                    $"Phone = @Phone, " +
-                    $"Assemblee = @Assemblee, " +
-                    $"Privilege = @Privilege " +
-                    $"WHERE idUser=@idUser";
+                    $"IdPole = @idPole " +
+                    $"WHERE idassemblee=@IdAssemblee";
 
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
-                cmd.Parameters.AddWithValue("@Nom", Nom);
-                cmd.Parameters.AddWithValue("@Prenom", Prenom);
-                cmd.Parameters.AddWithValue("@Sexe", Sexe.ToString());
-                cmd.Parameters.AddWithValue("@Mail", Mail);
-                cmd.Parameters.AddWithValue("@Phone", Phone);
-                cmd.Parameters.AddWithValue("@Assemblee", Assemblee);
-                cmd.Parameters.AddWithValue("@Privilege", Privilege);
-                cmd.Parameters.AddWithValue("@idUser", IdUser);
+                cmd.Parameters.AddWithValue("@Nom", nom);
+                cmd.Parameters.AddWithValue("@IdPole", idPole);
+                cmd.Parameters.AddWithValue("@IdAssemblee", IdAssemblee);
 
                 cmd.ExecuteNonQuery();
             }
@@ -79,16 +96,37 @@ namespace DatabaseAccess.User
             }
         }
 
-        public void DeleteAssemblee(int IdUser)
+        public void DeleteAssemblee(int IdAssemblee)
         {
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = $"Delete from user " +
-                    $"WHERE idUser=@idUser";
+                string sql = $"Delete from assemblee " +
+                    $"WHERE idassemblee=@IdAssemblee";
 
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
-                cmd.Parameters.AddWithValue("@idUser", IdUser);
+                cmd.Parameters.AddWithValue("@IdAssemblee", IdAssemblee);
+
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void CreateAssemblee(string nom, int idPole)
+        {
+            MySqlConnection cnn = BDDRepository.OpenConnexion();
+            try
+            {
+                string sql = $"INSERT INTO Assemblee (Nom, IdPole) VALUES( " +
+                    $"@Nom, " +
+                    $"@IdPole)";
+
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@Nom", nom);
+                cmd.Parameters.AddWithValue("@IdPole", idPole);
 
                 cmd.ExecuteNonQuery();
             }

@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "La page des assemblées";
+}
+@model CiteU.Models.Assemblee.AssembleeEditViewModel
+<h1>@(Model.IsCreation ? "Création d'une assemblée" : Model.CurrentAssemblee.Nom)</h1>
+
+
+<form asp-controller="Assemblee" asp-action="@(Model.IsCreation ? "Create" : "Edit")" method="post" class="container">
+    @if (!Model.IsCreation)
+    {
+        <input type="hidden" asp-for="CurrentAssemblee.IdAssemblee" />
+    }
+    <div class="input-group">
+        <label asp-for="CurrentAssemblee.Nom">Nom</label>
+        <input asp-for="CurrentAssemblee.Nom" class="form-control" />
+    </div>
+    <div class="input-group">
+        <label asp-for="CurrentAssemblee.IdPole">Responsable</label>
+        <select asp-for="CurrentAssemblee.IdPole" class="form-control">
+            @foreach (var pole in Model.AllPoles)
+            {
+                <option value="@pole.IdPole">@pole.Libelle</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Valider</button>
+
+</form>
+@if (!Model.IsCreation)
+{
+    <form asp-controller="Assemblee" asp-action="Delete" method="post">
+        <input type="hidden" name="@nameof(Model.CurrentAssemblee.IdAssemblee)" value="@Model.CurrentAssemblee.IdAssemblee" />
+        <button type="submit" class="btn btn-danger">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </button>
+    </form>
+}

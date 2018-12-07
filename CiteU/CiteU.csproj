@@ -23,10 +23,13 @@
     <Content Update="Views\Langue\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Pole\Edit.cshtml">
+    <Content Update="Views\Assemblee\Edit.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Pole\Get.cshtml">
+    <Content Update="Views\Assemblee\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Pole\Edit.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Pole\Index.cshtml">

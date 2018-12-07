@@ -2,11 +2,14 @@
     ViewData["Title"] = "La page des utilisateurs";
 }
 @model CiteU.Models.User.UserEditViewModel
-<h1>@Model.CurrentUser.Nom @Model.CurrentUser.Prenom</h1>
+<h1>@(Model.IsCreation ? "Création d'une assemblée" : Model.CurrentUser.Nom + " " + Model.CurrentUser.Prenom)</h1>
 
 
-<form asp-controller="User" asp-action="Edit" method="post" class="container">
-    <input type="hidden" asp-for="CurrentUser.IdUser" />
+<form asp-controller="User" asp-action="@(Model.IsCreation ? "Create" : "Edit")" method="post" class="container">
+    @if (!Model.IsCreation)
+    {
+        <input type="hidden" asp-for="CurrentUser.IdUser" />
+    }
     <div class="input-group">
         <label asp-for="CurrentUser.Nom">Nom</label>
         <input asp-for="CurrentUser.Nom" class="form-control" />
@@ -32,15 +35,23 @@
         <input asp-for="CurrentUser.Sexe" class="form-control" />
     </div>
     <div class="input-group">
-        <label asp-for="CurrentUser.Assemblee">Assemblée</label>
-        <input asp-for="CurrentUser.Assemblee" class="form-control" />
+        <label asp-for="CurrentUser.IdAssemblee">Assemblée</label>
+        <select asp-for="CurrentUser.IdAssemblee" class="form-control">
+            @foreach (var assemblee in Model.AllAssemblees)
+            {
+                <option value="@assemblee.IdAssemblee">@assemblee.Nom</option>
+            }
+        </select>
     </div>
 
     <button type="submit" class="btn btn-success">Valider</button>
 </form>
-<form asp-controller="User" asp-action="Delete" method="post">
-    <input type="hidden" name="@nameof(Model.CurrentUser.IdUser)" value="@Model.CurrentUser.IdUser" />
-    <button type="submit" class="btn btn-danger">
-        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-    </button>
-</form>
+@if (!Model.IsCreation)
+{
+    <form asp-controller="User" asp-action="Delete" method="post">
+        <input type="hidden" name="@nameof(Model.CurrentUser.IdUser)" value="@Model.CurrentUser.IdUser" />
+        <button type="submit" class="btn btn-danger">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </button>
+    </form>
+}

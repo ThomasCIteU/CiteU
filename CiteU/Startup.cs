@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DatabaseAccess.Assemblee;
 using DatabaseAccess.Langue;
 using DatabaseAccess.Pole;
 using DatabaseAccess.User;
@@ -37,6 +38,7 @@ namespace CiteU
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IPoleRepository, PoleRepository>();
             services.AddTransient<ILangueRepository, LangueRepository>();
+            services.AddTransient<IAssembleeRepository, AssembleeRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

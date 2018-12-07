@@ -66,7 +66,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Pole", pole.IdPole);
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult CreatePage()
         {
             var vm = new PoleEditViewModel()

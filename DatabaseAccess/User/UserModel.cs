@@ -12,7 +12,7 @@ namespace DatabaseAccess.User
         public char Sexe { get; set; }
         public string Mail { get; set; }
         public string Phone { get; set; }
-        public string Assemblee { get; set; }
+        public int IdAssemblee { get; set; }
         public string Privilege { get; set; }
     }
 }

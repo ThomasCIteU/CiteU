@@ -15,8 +15,7 @@ namespace DatabaseAccess.User
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = "SELECT U.idUser, U.Nom, U.Prenom, U.Sexe, U.Mail, U.Phone, A.Nom as NomAssemblee, U.Privilege FROM User U " +
-                    "LEFT JOIN assemblee A ON U.Assemblee = A.idAssemblee";
+                string sql = "SELECT idUser, Nom, Prenom, Sexe, Mail, Phone, Assemblee, Privilege FROM User U ";
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 MySqlDataReader rdr = cmd.ExecuteReader();
                 var listUsers = new List<UserModel>();
@@ -31,7 +30,7 @@ namespace DatabaseAccess.User
                         Sexe = Convert.ToChar(rdr["Sexe"]),
                         Mail = rdr["Mail"].ToString(),
                         Phone = rdr["Phone"].ToString(),
-                        Assemblee = rdr["NomAssemblee"].ToString(),
+                        IdAssemblee = Convert.ToInt16(rdr["Assemblee"]),
                         Privilege = rdr["Privilege"].ToString()
                         }
                     );
@@ -66,7 +65,7 @@ namespace DatabaseAccess.User
                         Sexe = Convert.ToChar(rdr["Sexe"]),
                         Mail = rdr["Mail"].ToString(),
                         Phone = rdr["Phone"].ToString(),
-                        Assemblee = rdr["Assemblee"].ToString(),
+                        IdAssemblee = Convert.ToInt16(rdr["Assemblee"]),
                         Privilege = rdr["Privilege"].ToString()
                     };
                 }
@@ -84,7 +83,7 @@ namespace DatabaseAccess.User
             }
         }
 
-        public void EditUser(int IdUser, string Nom, string Prenom, char Sexe, string Mail, string Phone, string Assemblee, string Privilege)
+        public void EditUser(int IdUser, string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege)
         {
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
@@ -127,6 +126,37 @@ namespace DatabaseAccess.User
 
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@idUser", IdUser);
+
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void CreateUser(string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege)
+        {
+            MySqlConnection cnn = BDDRepository.OpenConnexion();
+            try
+            {
+                string sql = $"INSERT INTO user (Nom, Prenom, Sexe, Mail, Phone, Assemblee, Privilege) VALUES( " +
+                    $"@Nom, " +
+                    $"@Prenom, " +
+                    $"@Sexe, " +
+                    $"@Mail, " +
+                    $"@Phone, " +
+                    $"@Assemblee, " +
+                    $"@Privilege)";
+
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@Nom", Nom);
+                cmd.Parameters.AddWithValue("@Prenom", Prenom);
+                cmd.Parameters.AddWithValue("@Sexe", Sexe);
+                cmd.Parameters.AddWithValue("@Mail", Mail);
+                cmd.Parameters.AddWithValue("@Phone", Phone);
+                cmd.Parameters.AddWithValue("@Assemblee", Assemblee);
+                cmd.Parameters.AddWithValue("@Privilege", Privilege);
 
                 cmd.ExecuteNonQuery();
             }

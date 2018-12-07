@@ -59,7 +59,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Langue", Langue.IdLangue);
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult CreatePage()
         {
             var vm = new LangueEditViewModel()
