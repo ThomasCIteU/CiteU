@@ -8,9 +8,11 @@ using CiteU.Models;
 using DatabaseAccess.Assemblee;
 using CiteU.Models.Assemblee;
 using DatabaseAccess.Pole;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CiteU.Controllers
 {
+    [Authorize]
     public class AssembleeController : Controller
     {
         public readonly IAssembleeRepository _assembleeRepository;

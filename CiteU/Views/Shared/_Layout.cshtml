@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -39,6 +41,11 @@
                             <li><a asp-area="" asp-controller="Langue" asp-action="Index">Les langues</a></li>
                             <li><a asp-area="" asp-controller="Assemblee" asp-action="Index">Les assemblées</a></li>
                         </ul>
+                    </li>
+                    <li>
+                        <form asp-controller="Account" asp-action="Logout" method="get">
+                            <button type="submit" class="btn btn-danger">Déconnexion</button>
+                        </form>
                     </li>
                 </ul>
             </div>

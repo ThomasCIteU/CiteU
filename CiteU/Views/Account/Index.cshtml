@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Connexions";
+}
+@model CiteU.Models.Login.LoginViewModel
+<h1>Connexion</h1>
+<strong>@Model?.ErrorMessage</strong>
+<form asp-controller="Account" asp-action="Login" method="post">
+    <label asp-for="Mail">Mail</label>
+    <input asp-for="Mail" />
+    <label asp-for="Mdp">Mot de passe</label>
+    <input asp-for="Mdp" />
+    <button type="submit" class="btn btn-default">Se connecter</button>
+</form>

@@ -1,6 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+
 <h1>Prédication dans les Cités Universitaires</h1>
 
-<p>Bienvenue à toi.</p>
+<p>Bienvenue à toi @HttpContextAccessor.HttpContext.User.Identity.Name.</p>

@@ -8,9 +8,11 @@ using CiteU.Models;
 using DatabaseAccess.User;
 using CiteU.Models.User;
 using DatabaseAccess.Assemblee;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CiteU.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         public readonly IUserRepository _userRepository;

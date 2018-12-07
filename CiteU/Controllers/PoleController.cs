@@ -8,9 +8,11 @@ using CiteU.Models;
 using DatabaseAccess.Pole;
 using CiteU.Models.Pole;
 using DatabaseAccess.User;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CiteU.Controllers
 {
+    [Authorize]
     public class PoleController : Controller
     {
         public readonly IPoleRepository _poleRepository;

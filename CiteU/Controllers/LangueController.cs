@@ -8,9 +8,11 @@ using CiteU.Models;
 using DatabaseAccess.Langue;
 using CiteU.Models.Langue;
 using DatabaseAccess.User;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CiteU.Controllers
 {
+    [Authorize]
     public class LangueController : Controller
     {
         public readonly ILangueRepository _LangueRepository;
