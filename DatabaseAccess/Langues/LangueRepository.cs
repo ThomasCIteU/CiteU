@@ -31,7 +31,7 @@ namespace DatabaseAccess.Langue
                     );
                 }
                 rdrLangue.Close();
-
+                cnn.Close();
                 return listLangues;
             }
             catch (Exception ex)
@@ -59,7 +59,7 @@ namespace DatabaseAccess.Langue
                     };
                 }
                 rdrLangue.Close();
-
+                cnn.Close();
                 if (Langue == null)
                 {
                     throw new Exception("Cette langue n'existe pas");
@@ -86,6 +86,7 @@ namespace DatabaseAccess.Langue
                 cmd.Parameters.AddWithValue("@idLangue", IdLangue);
 
                 cmd.ExecuteNonQuery();
+                cnn.Close();
             }
             catch (Exception ex)
             {
@@ -105,6 +106,7 @@ namespace DatabaseAccess.Langue
                 cmd.Parameters.AddWithValue("@idLangue", IdLangue);
 
                 cmd.ExecuteNonQuery();
+                cnn.Close();
             }
             catch (Exception ex)
             {
@@ -123,6 +125,7 @@ namespace DatabaseAccess.Langue
                 cmd.Parameters.AddWithValue("@nom", nom);
 
                 cmd.ExecuteNonQuery();
+                cnn.Close();
             }
             catch (Exception ex)
             {

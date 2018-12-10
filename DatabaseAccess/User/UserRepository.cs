@@ -36,7 +36,7 @@ namespace DatabaseAccess.User
                     );
                 }
                 rdr.Close();
-
+                cnn.Close();
                 return listUsers;
             }
             catch (Exception ex)
@@ -70,8 +70,8 @@ namespace DatabaseAccess.User
                     };
                 }
                 rdr.Close();
-
-                if(user == null)
+                cnn.Close();
+                if (user == null)
                 {
                     throw new Exception("Cet utilisateur n'existe pas");
                 }
@@ -109,6 +109,8 @@ namespace DatabaseAccess.User
                 cmd.Parameters.AddWithValue("@idUser", IdUser);
 
                 cmd.ExecuteNonQuery();
+
+                cnn.Close();
             }
             catch (Exception ex)
             {
@@ -128,6 +130,8 @@ namespace DatabaseAccess.User
                 cmd.Parameters.AddWithValue("@idUser", IdUser);
 
                 cmd.ExecuteNonQuery();
+
+                cnn.Close();
             }
             catch (Exception ex)
             {
@@ -159,6 +163,8 @@ namespace DatabaseAccess.User
                 cmd.Parameters.AddWithValue("@Privilege", Privilege);
 
                 cmd.ExecuteNonQuery();
+
+                cnn.Close();
             }
             catch (Exception ex)
             {

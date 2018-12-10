@@ -11,24 +11,17 @@ namespace DatabaseAccess.BDD
         {
             string connetionString = null;
             MySqlConnection cnn;
-            connetionString = "server=127.0.0.1;database=citeu;uid=root;pwd=5^6n=Z^HEQArnKvF;";
+            //Connexion Locale
+            //connetionString = "server=127.0.0.1;database=citeu;uid=root;pwd=5^6n=Z^HEQArnKvF;";
+            //Connexion host gratuit
+            //connetionString = "Server=MYSQL6002.site4now.net;Database=db_a435d6_citeu;Uid=a435d6_citeu;Pwd=Kanabeach1997";
+            //Connexion myalwaysdata            
+            connetionString = "Server=MYSQL6002.site4now.net;Database=db_a435d6_citeu;Uid=a435d6_citeu;Pwd=Kanabeach1997";
             cnn = new MySqlConnection(connetionString);
             try
             {
                 cnn.Open();
                 return cnn;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public static void CloseConnexion(MySqlConnection cnn)
-        {
-            try
-            {
-                cnn.Close();
             }
             catch (Exception ex)
             {

@@ -8,9 +8,4 @@
     <PackageReference Include="MySql.Data" Version="8.0.13" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Reunions\" />
-    <Folder Include="Publications\" />
-  </ItemGroup>
-
 </Project>

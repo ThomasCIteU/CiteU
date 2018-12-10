@@ -33,7 +33,7 @@ namespace DatabaseAccess.Pole
                     );
                 }
                 rdrPole.Close();
-
+                cnn.Close();
                 return listPoles;
             }
             catch (Exception ex)
@@ -63,7 +63,7 @@ namespace DatabaseAccess.Pole
                     };
                 }
                 rdrPole.Close();
-
+                cnn.Close();
                 if (Pole == null)
                 {
                     throw new Exception("Ce pôle n'existe pas");
@@ -94,6 +94,7 @@ namespace DatabaseAccess.Pole
                 cmd.Parameters.AddWithValue("@idPole", IdPole);
 
                 cmd.ExecuteNonQuery();
+                cnn.Close();
             }
             catch (Exception ex)
             {
@@ -113,6 +114,7 @@ namespace DatabaseAccess.Pole
                 cmd.Parameters.AddWithValue("@idPole", IdPole);
 
                 cmd.ExecuteNonQuery();
+                cnn.Close();
             }
             catch (Exception ex)
             {
@@ -136,6 +138,7 @@ namespace DatabaseAccess.Pole
                 cmd.Parameters.AddWithValue("@IdAdjoint", idAdjoint);
 
                 cmd.ExecuteNonQuery();
+                cnn.Close();
             }
             catch (Exception ex)
             {

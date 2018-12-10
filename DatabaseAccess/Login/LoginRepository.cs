@@ -23,6 +23,8 @@ namespace DatabaseAccess.Login
                     {
                         if(Mdp == rdr["Mdp"].ToString())
                         {
+
+                            cnn.Close();
                             return new UserModel()
                             {
                                 IdUser = Convert.ToInt16(rdr["idUser"]),
@@ -39,6 +41,7 @@ namespace DatabaseAccess.Login
                     
                 }
                 rdr.Close();
+                cnn.Close();
                 return new UserModel()
                 {
                     IdUser = 0

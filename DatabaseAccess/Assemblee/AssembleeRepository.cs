@@ -32,6 +32,7 @@ namespace DatabaseAccess.Assemblee
                 }
                 rdr.Close();
 
+                cnn.Close();
                 return listAssembblee;
             }
             catch (Exception ex)
@@ -61,6 +62,7 @@ namespace DatabaseAccess.Assemblee
                 }
                 rdrAssemblee.Close();
 
+                cnn.Close();
                 if (Assemblee == null)
                 {
                     throw new Exception("Cette assemblée n'existe pas");
@@ -89,6 +91,7 @@ namespace DatabaseAccess.Assemblee
                 cmd.Parameters.AddWithValue("@IdAssemblee", IdAssemblee);
 
                 cmd.ExecuteNonQuery();
+                cnn.Close();
             }
             catch (Exception ex)
             {
@@ -108,6 +111,7 @@ namespace DatabaseAccess.Assemblee
                 cmd.Parameters.AddWithValue("@IdAssemblee", IdAssemblee);
 
                 cmd.ExecuteNonQuery();
+                cnn.Close();
             }
             catch (Exception ex)
             {
@@ -129,6 +133,7 @@ namespace DatabaseAccess.Assemblee
                 cmd.Parameters.AddWithValue("@IdPole", idPole);
 
                 cmd.ExecuteNonQuery();
+                cnn.Close();
             }
             catch (Exception ex)
             {
