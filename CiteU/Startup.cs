@@ -57,8 +57,11 @@ namespace CiteU
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
+                //because we are in dev actually
+                app.UseDeveloperExceptionPage();
+
+                //app.UseExceptionHandler("/Home/Error");
+                //app.UseHsts();
             }
 
             app.UseHttpsRedirection();
