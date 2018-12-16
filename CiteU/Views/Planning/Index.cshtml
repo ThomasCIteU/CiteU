@@ -1,4 +1,31 @@
 ﻿@{
     ViewData["Title"] = "La page des plannings";
 }
-<h1>Les plannings</h1>
+@model CiteU.Models.Planning.PlanningViewModel
+
+<h1>Le planning</h1>
+<div class="planning">
+    <div class="month">
+        @foreach (var week in Model.Weeks)
+        {
+            <div class="week">
+                @foreach (var day in week)
+                {
+                    <div class="day">
+                        @day.Date.ToShortDateString()
+                        @if (day.Reunion != null)
+                        {
+                            @day.Reunion.Lieu
+                            <form asp-controller="Reunion" asp-action="EditPage" method="get">
+                                <input type="hidden" name="@nameof(day.Reunion.IdReunion)" value="@day.Reunion.IdReunion" />
+                                <button type="submit" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                </button>
+                            </form>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>

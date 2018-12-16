@@ -11,5 +11,6 @@ namespace DatabaseAccess.Reunion
         void DeleteReunion(int IdReunion);
         ReunionModel GetReunion(int idReunion);
         void EditReunion(int idReunion, DateTime date, int idResponsable, int idCreateur, string lieu, int idPole);
+        ReunionModel GetReunion(DateTime date);
     }
 }
