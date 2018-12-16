@@ -15,7 +15,7 @@ namespace DatabaseAccess.Langue
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = "SELECT * FROM Langue";
+                string sql = "SELECT * FROM langue";
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 MySqlDataReader rdrLangue = cmd.ExecuteReader();
 
@@ -45,7 +45,7 @@ namespace DatabaseAccess.Langue
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = "SELECT * FROM Langue WHERE idLangue=@idLangue";
+                string sql = "SELECT * FROM langue WHERE idLangue=@idLangue";
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@idLangue", idLangue);
                 MySqlDataReader rdrLangue = cmd.ExecuteReader();
@@ -77,7 +77,7 @@ namespace DatabaseAccess.Langue
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = $"UPDATE Langue SET " +
+                string sql = $"UPDATE langue SET " +
                     $"Nom = @Nom " +
                     $"WHERE idLangue=@idLangue";
 
@@ -99,7 +99,7 @@ namespace DatabaseAccess.Langue
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = $"Delete from Langue " +
+                string sql = $"Delete from langue " +
                     $"WHERE idLangue=@idLangue";
 
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
@@ -119,7 +119,7 @@ namespace DatabaseAccess.Langue
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = $"INSERT INTO Langue (Nom) VALUES(@nom)";
+                string sql = $"INSERT INTO langue (Nom) VALUES(@nom)";
 
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@nom", nom);

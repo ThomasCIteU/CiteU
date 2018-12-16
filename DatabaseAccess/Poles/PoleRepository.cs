@@ -15,7 +15,7 @@ namespace DatabaseAccess.Pole
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = "SELECT * FROM Pole";
+                string sql = "SELECT * FROM pole";
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 MySqlDataReader rdrPole = cmd.ExecuteReader();
 
@@ -47,7 +47,7 @@ namespace DatabaseAccess.Pole
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = "SELECT * FROM Pole WHERE idPole=@idPole";
+                string sql = "SELECT * FROM pole WHERE idPole=@idPole";
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@idPole", idPole);
                 MySqlDataReader rdrPole = cmd.ExecuteReader();
@@ -81,7 +81,7 @@ namespace DatabaseAccess.Pole
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = $"UPDATE Pole SET " +
+                string sql = $"UPDATE pole SET " +
                     $"Libelle = @Libelle, " +
                     $"IdResponsable = @IdResponsable, " +
                     $"IdAdjoint = @IdAdjoint " +
@@ -107,7 +107,7 @@ namespace DatabaseAccess.Pole
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = $"Delete from Pole " +
+                string sql = $"Delete from pole " +
                     $"WHERE idPole=@idPole";
 
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
@@ -127,7 +127,7 @@ namespace DatabaseAccess.Pole
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = $"INSERT INTO Pole (Libelle, IdResponsable, IdAdjoint) VALUES( " +
+                string sql = $"INSERT INTO pole (Libelle, IdResponsable, IdAdjoint) VALUES( " +
                     $"@Libelle, " +
                     $"@IdResponsable, " +
                     $"@IdAdjoint)";

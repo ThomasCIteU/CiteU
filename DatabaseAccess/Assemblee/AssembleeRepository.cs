@@ -46,7 +46,7 @@ namespace DatabaseAccess.Assemblee
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = "SELECT * FROM Assemblee WHERE idAssemblee=@idAssemblee";
+                string sql = "SELECT * FROM assemblee WHERE idAssemblee=@idAssemblee";
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@idAssemblee", idAssemblee);
                 MySqlDataReader rdrAssemblee = cmd.ExecuteReader();
@@ -124,7 +124,7 @@ namespace DatabaseAccess.Assemblee
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = $"INSERT INTO Assemblee (Nom, IdPole) VALUES( " +
+                string sql = $"INSERT INTO assemblee (Nom, IdPole) VALUES( " +
                     $"@Nom, " +
                     $"@IdPole)";
 

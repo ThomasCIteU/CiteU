@@ -15,7 +15,7 @@ namespace DatabaseAccess.User
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = "SELECT idUser, Nom, Prenom, Sexe, Mail, Phone, Assemblee, Privilege FROM User U ";
+                string sql = "SELECT idUser, Nom, Prenom, Sexe, Mail, Phone, Assemblee, Privilege FROM user U ";
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 MySqlDataReader rdr = cmd.ExecuteReader();
                 var listUsers = new List<UserModel>();
@@ -50,7 +50,7 @@ namespace DatabaseAccess.User
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = "SELECT * FROM User WHERE iduser=@idUser";
+                string sql = "SELECT * FROM user WHERE iduser=@idUser";
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@idUser", idUser);
                 MySqlDataReader rdr = cmd.ExecuteReader();

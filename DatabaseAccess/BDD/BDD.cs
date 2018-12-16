@@ -16,7 +16,7 @@ namespace DatabaseAccess.BDD
             //Connexion host gratuit
             //connetionString = "Server=MYSQL6002.site4now.net;Database=db_a435d6_citeu;Uid=a435d6_citeu;Pwd=Kanabeach1997";
             //Connexion myalwaysdata            
-            connetionString = "Server=MYSQL6002.site4now.net;Database=db_a435d6_citeu;Uid=a435d6_citeu;Pwd=Kanabeach1997";
+            connetionString = "Server=mysql-ipicoivoir.alwaysdata.net;Database=ipicoivoir_citeu;Uid=153687;Pwd=IPICovoit";
             cnn = new MySqlConnection(connetionString);
             try
             {
