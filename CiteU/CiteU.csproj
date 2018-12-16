@@ -22,6 +22,9 @@
     <Content Update="Views\Account\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Planning\PlanningForAMonth.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Planning\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

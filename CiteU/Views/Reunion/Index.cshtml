@@ -8,23 +8,23 @@
 </form>
 <table class="table table-striped table-hover">
     <tr>
-        <th>Id reunion</th>
-        <th>Responsable</th>
-        <th>Createur de la réunion</th>
         <th>Date</th>
         <th>Heure</th>
         <th>Lieu</th>
+        <th>Responsable</th>
+        <th>Createur de la réunion</th>
+        <th>Pôle</th>
         <th colspan="2"></th>
     </tr>
     @foreach (var Reunion in Model.ListReunions)
     {
     <tr>
-        <td>@Reunion.IdReunion</td>
-        <td>@Reunion.IdResponsable</td>
-        <td>@Reunion.IdCreateur</td>
         <td>@Reunion.Date.ToShortDateString()</td>
         <td>@Reunion.Date.ToShortTimeString()</td>
         <td>@Reunion.Lieu</td>
+        <td>@Reunion.Responsable</td>
+        <td>@Reunion.Createur</td>
+        <td>@Reunion.Pole</td>
         <td>
             <form asp-controller="Reunion" asp-action="EditPage" method="get">
                 <input type="hidden" name="@nameof(Reunion.IdReunion)" value="@Reunion.IdReunion" />

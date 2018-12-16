@@ -31,20 +31,23 @@ namespace CiteU.Controllers
         {
             var listDesReunions = new List<ReunionViewModel>();
             var list = _ReunionRepository.GetAllReunions();
-            foreach(var Reunion in list)
+            foreach (var Reunion in list)
             {
+                var responsable = _userRepository.GetUser(Reunion.IdResponsable);
+                var createur = _userRepository.GetUser(Reunion.IdCreateur);
                 listDesReunions.Add(new ReunionViewModel()
                 {
                     IdReunion = Reunion.IdReunion,
                     Date = Reunion.Date,
-                    IdResponsable = Reunion.IdResponsable,
-                    IdCreateur = Reunion.IdCreateur,
-                    Lieu = Reunion.Lieu
+                    Responsable = responsable.Nom + " " + responsable.Prenom,
+                    Createur = createur.Nom + " " + createur.Prenom,
+                    Lieu = Reunion.Lieu,
+                    Pole = _poleRepository.GetPole(Reunion.IdPole).Libelle
                 });
             }
             var vm = new ReunionsViewModel()
             {
-                ListReunions = listDesReunions
+                ListReunions = listDesReunions.OrderByDescending(r => r.Date).ToList()
             };
             return View(vm);
         }
