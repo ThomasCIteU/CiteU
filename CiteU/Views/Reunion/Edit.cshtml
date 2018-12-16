@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "La page des Réunions";
+}
+@model CiteU.Models.Reunion.ReunionEditViewModel
+<h1>@(Model.IsCreation ? "Création d'une Réunion" : "Réunion")</h1>
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+<form asp-controller="Reunion" asp-action="@(Model.IsCreation ? "Create" : "Edit")" method="post" class="container">
+    @if (!Model.IsCreation)
+    {
+        <input type="hidden" asp-for="CurrentReunion.IdReunion" />
+    }
+    <input asp-for="CurrentReunion.IdCreateur" class="form-control" type="hidden" value="2" />
+    <div class="input-group">
+        <label asp-for="CurrentReunion.Date">Date</label>
+        <input asp-for="CurrentReunion.Date" class="form-control" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")"/>
+    </div>
+    <div class="input-group">
+        <label asp-for="CurrentReunion.Heure">Heure</label>
+        <input asp-for="CurrentReunion.Heure" class="form-control" type="time" value="18:30"/>
+    </div>
+    <div class="input-group">
+        <label asp-for="CurrentReunion.Lieu">Lieu</label>
+        <input asp-for="CurrentReunion.Lieu" class="form-control" />
+    </div>
+    <div class="input-group">
+        <label asp-for="CurrentReunion.IdResponsable">Responsable</label>
+        <select asp-for="CurrentReunion.IdResponsable" class="form-control">
+            @foreach (var user in Model.AllUsers)
+            {
+                <option value="@user.IdUser">@user.Nom @user.Prenom</option>
+            }
+        </select>
+    </div>
+    <div class="input-group">
+        <label asp-for="CurrentReunion.IdPole">Pôle</label>
+        <select asp-for="CurrentReunion.IdPole" class="form-control">
+            @foreach (var pole in Model.AllPoles)
+            {
+                <option value="@pole.IdPole">@pole.Libelle</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Valider</button>
+
+</form>
+@if (!Model.IsCreation)
+{
+    <form asp-controller="Reunion" asp-action="Delete" method="post">
+        <input type="hidden" name="@nameof(Model.CurrentReunion.IdReunion)" value="@Model.CurrentReunion.IdReunion" />
+        <button type="submit" class="btn btn-danger">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </button>
+    </form>
+}

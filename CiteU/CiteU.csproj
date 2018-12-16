@@ -37,6 +37,12 @@
     <Content Update="Views\Assemblee\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Reunion\Edit.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Reunion\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Pole\Edit.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

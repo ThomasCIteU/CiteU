@@ -6,6 +6,7 @@ namespace DatabaseAccess.Reunion
 {
     public interface IReunionRepository
     {
-        void Test();
+        List<ReunionModel> GetAllReunions();
+        void CreateReunion(DateTime date, int idResponsable, int idCreateur, string Lieu, int idPole);
     }
 }

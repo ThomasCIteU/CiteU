@@ -6,6 +6,7 @@ using DatabaseAccess.Assemblee;
 using DatabaseAccess.Langue;
 using DatabaseAccess.Login;
 using DatabaseAccess.Pole;
+using DatabaseAccess.Reunion;
 using DatabaseAccess.User;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -43,6 +44,7 @@ namespace CiteU
             services.AddTransient<IPoleRepository, PoleRepository>();
             services.AddTransient<ILangueRepository, LangueRepository>();
             services.AddTransient<IAssembleeRepository, AssembleeRepository>();
+            services.AddTransient<IReunionRepository, ReunionRepository>();
             services.AddTransient<ILoginRepository, LoginRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
