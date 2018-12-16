@@ -8,5 +8,8 @@ namespace DatabaseAccess.Reunion
     {
         List<ReunionModel> GetAllReunions();
         void CreateReunion(DateTime date, int idResponsable, int idCreateur, string Lieu, int idPole);
+        void DeleteReunion(int IdReunion);
+        ReunionModel GetReunion(int idReunion);
+        void EditReunion(int idReunion, DateTime date, int idResponsable, int idCreateur, string lieu, int idPole);
     }
 }

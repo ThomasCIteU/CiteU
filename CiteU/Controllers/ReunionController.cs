@@ -49,26 +49,29 @@ namespace CiteU.Controllers
             return View(vm);
         }
 
-        //[HttpGet]
-        //public IActionResult EditPage(int IdReunion)
-        //{
-        //    var vm = new ReunionEditViewModel()
-        //    {
-        //        CurrentReunion = _ReunionRepository.GetReunion(IdReunion), 
-        //        AllUsers = _userRepository.GetUsers(),
-        //        IsCreation = false
-        //    };
-        //    return View("edit", vm);
-        //}
+        [HttpGet]
+        public IActionResult EditPage(int IdReunion)
+        {
+            var vm = new ReunionEditViewModel()
+            {
+                CurrentReunion = _ReunionRepository.GetReunion(IdReunion),
+                AllPoles = _poleRepository.GetPoles(),
+                AllUsers = _userRepository.GetUsers(),
+                IsCreation = false
+            };
+            return View("edit", vm);
+        }
 
-        //[HttpPost]
-        //public IActionResult Edit(ReunionEditViewModel Reunion)
-        //{
-        //    var Reunion = Reunion.CurrentReunion;
-        //    _ReunionRepository.EditReunion(Reunion.IdReunion, Reunion.Libelle, Reunion.IdResponsable, Reunion.IdAdjoint);
+        [HttpPost]
+        public IActionResult Edit(ReunionEditViewModel reunion)
+        {
+            var Reunion = reunion.CurrentReunion;
+            var date = reunion.CurrentReunion.Date.AddHours(reunion.CurrentReunion.Heure.Hour);
+            date = date.AddMinutes(reunion.CurrentReunion.Heure.Minute);
+            _ReunionRepository.EditReunion(Reunion.IdReunion, date, Reunion.IdResponsable, Reunion.IdCreateur, Reunion.Lieu, Reunion.IdPole);
 
-        //    return RedirectToAction("Index", "Reunion", Reunion.IdReunion);
-        //}
+            return RedirectToAction("Index", "Reunion", Reunion.IdReunion);
+        }
 
         [HttpGet]
         public IActionResult CreatePage()
@@ -93,12 +96,12 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Reunion", Reunion.IdReunion);
         }
 
-        //[HttpPost]
-        //public IActionResult Delete(int IdReunion)
-        //{
-        //    _ReunionRepository.DeleteReunion(IdReunion);
+        [HttpPost]
+        public IActionResult Delete(int IdReunion)
+        {
+            _ReunionRepository.DeleteReunion(IdReunion);
 
-        //    return RedirectToAction("Index", "Reunion");
-        //}
+            return RedirectToAction("Index", "Reunion");
+        }
     }
 }
