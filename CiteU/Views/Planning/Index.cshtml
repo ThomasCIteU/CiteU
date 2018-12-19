@@ -3,26 +3,62 @@
 }
 @model CiteU.Models.Planning.PlanningViewModel
 
+<environment include="Development">
+    <link rel="stylesheet" href="~/css/Planning.css" />
+</environment>
+<environment exclude="Development">
+    <link rel="stylesheet" href="~/css/Planning.css" />
+</environment>
+
 <h1>Le planning</h1>
 <div class="planning">
+    <a class="btn btn-info" href="/Planning/Index?year=@Model.Actual.AddMonths(-1).Year&month=@Model.Actual.AddMonths(-1).Month"><  Précédent</a>
+    <a class="btn btn-info" style="float:right;" href="/Planning/Index?year=@Model.Actual.AddMonths(1).Year&month=@Model.Actual.AddMonths(1).Month">Suivant  ></a>
     <div class="month">
         @foreach (var week in Model.Weeks)
         {
-            <div class="week">
+            <div class="week row">
                 @foreach (var day in week)
                 {
-                    <div class="day">
-                        @day.Date.ToShortDateString()
-                        @if (day.Reunion != null)
-                        {
-                            @day.Reunion.Lieu
-                            <form asp-controller="Reunion" asp-action="EditPage" method="get">
-                                <input type="hidden" name="@nameof(day.Reunion.IdReunion)" value="@day.Reunion.IdReunion" />
-                                <button type="submit" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                </button>
-                            </form>
-                        }
+                    <div class="day col-xs-12 col-sm-4">
+                        <header>@day.Date.ToString("dddd", new System.Globalization.CultureInfo("fr-FR")) @day.Date.ToShortDateString()</header>
+                        <article>
+                            @if (day.Reunion != null)
+                            {
+
+                                <p>Heure:  @day.Reunion.Date.ToShortTimeString()</p>
+                                <p>Lieu : @day.Reunion.Lieu </p>
+                                <p>par <a data-toggle="modal" data-target="#@day.Reunion.IdReunion">@day.Reunion.Responsable.Nom @day.Reunion.Responsable.Prenom</a></p>
+                                <form asp-controller="Reunion" asp-action="EditPage" method="get">
+                                    <input type="hidden" name="@nameof(day.Reunion.IdReunion)" value="@day.Reunion.IdReunion" />
+                                    <button type="submit" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                    </button>
+                                </form>
+
+                                <!-- MODAL -->
+                                <div id="@day.Reunion.IdReunion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="exampleModalLabel">@day.Reunion.Responsable.Nom @day.Reunion.Responsable.Prenom</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>E-Mail : @day.Reunion.Responsable.Mail </p>
+                                                <p>Téléphone : <a href="tel:@day.Reunion.Responsable.Phone">@day.Reunion.Responsable.Phone</a></p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <p>Pas de réunion.</p>
+                            }
+                        </article>
                     </div>
                 }
             </div>

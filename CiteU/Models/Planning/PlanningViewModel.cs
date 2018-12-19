@@ -7,6 +7,7 @@ namespace CiteU.Models.Planning
 {
     public class PlanningViewModel
     {
+        public DateTime Actual { get; set; }
         public List<List<DayViewModel>> Weeks { get; set; }
     }
 }

@@ -24,9 +24,8 @@ namespace CiteU.Controllers
             _poleRepository = poleRepository;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int year = 2018, int month = 12)
         {
-            int year = 2018; int month = 12;
             var listMonthDays = new List<List<DayViewModel>>();
             int days = DateTime.DaysInMonth(year, month);
             var listWeekDays = new List<DayViewModel>();
@@ -47,7 +46,15 @@ namespace CiteU.Controllers
                         listWeekDays.Add(new DayViewModel
                         {
                             Date = aDay,
-                            Reunion = reunion
+                            Reunion = new ReunionPlanningViewModel()
+                            {
+                                IdReunion = reunion.IdReunion,
+                                Date = reunion.Date,
+                                Responsable = _userRepository.GetUser(reunion.IdResponsable),
+                                Lieu = reunion.Lieu,
+                                IdPole = reunion.IdPole,
+                                NbParticipants = 2 //todo : valoriser ceci.
+                            }
                         });
                     }
                     else
@@ -62,7 +69,8 @@ namespace CiteU.Controllers
             listMonthDays.Add(listWeekDays);
             var vm = new PlanningViewModel
             {
-                Weeks = listMonthDays
+                Weeks = listMonthDays,
+                Actual = new DateTime(year, month, 1)
             };
             return View(vm);
         }

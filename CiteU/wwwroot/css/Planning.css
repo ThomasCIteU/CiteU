@@ -1,0 +1,21 @@
+.planning .month .week {
+  display: flex;
+  margin: 15px; }
+  @media (max-width: 768px) {
+    .planning .month .week {
+      flex-direction: column; } }
+  .planning .month .week .day {
+    border: solid;
+    padding: 0; }
+    .planning .month .week .day header {
+      width: 100%;
+      border-bottom: solid 1px #1d3661;
+      display: block;
+      background-color: aquamarine;
+      padding: 5px; }
+    .planning .month .week .day article {
+      padding: 5px; }
+      .planning .month .week .day article a {
+        cursor: pointer; }
+    .planning .month .week .day .modal-body {
+      text-align: center; }
