@@ -109,6 +109,23 @@ namespace CiteU.Controllers
         }
 
         [Authorize(Policy = ClaimCiteU.Administrateur)]
+        [HttpGet]
+        public IActionResult CreatePageFromDate(DateTime Date)
+        {
+            var vm = new ReunionEditViewModel()
+            {
+                CurrentReunion = new ReunionModel
+                {
+                    Date = Date
+                },
+                AllUsers = _userRepository.GetUsers(),
+                AllPoles = _poleRepository.GetPoles(),
+                IsCreation = true
+            };
+            return View("edit", vm);
+        }
+
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpPost]
         public IActionResult Create(ReunionEditViewModel reunion)
         {

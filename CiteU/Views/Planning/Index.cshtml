@@ -38,7 +38,7 @@
                                         </button>
                                     </form>
                                 }
-                                
+
 
                                 <!-- MODAL -->
                                 <div id="@day.Reunion.IdReunion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
@@ -61,6 +61,13 @@
                             else
                             {
                                 <p>Pas de réunion.</p>
+                                @if ((bool)ViewData["CanEdit"])
+                                {
+                                <form asp-controller="Reunion" asp-action="CreatePageFromDate" method="get">
+                                    <input type="hidden" name="Date" value="@day.Date.ToString("yyyy-MM-dd")" />
+                                    <button type="submit" class="btn btn-default">Ajouter une réunion</button>
+                                </form>
+                                }
                             }
                         </article>
                     </div>

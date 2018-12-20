@@ -20,11 +20,11 @@
     </div>
     <div class="input-group">
         <label asp-for="CurrentUser.Mail">Mail</label>
-        <input asp-for="CurrentUser.Mail" class="form-control" />
+        <input asp-for="CurrentUser.Mail" class="form-control" type="email"/>
     </div>
     <div class="input-group">
         <label asp-for="CurrentUser.Phone">Phone</label>
-        <input asp-for="CurrentUser.Phone" class="form-control" />
+        <input asp-for="CurrentUser.Phone" class="form-control"/>
     </div>
     <div class="input-group">
         <label asp-for="CurrentUser.Privilege">Privilege</label>
@@ -32,7 +32,10 @@
     </div>
     <div class="input-group">
         <label asp-for="CurrentUser.Sexe">Sexe</label>
-        <input asp-for="CurrentUser.Sexe" class="form-control" />
+        <select asp-for="CurrentUser.Sexe" class="form-control">
+            <option value="M">Homme</option>
+            <option value="F">Femme</option>
+        </select>
     </div>
     <div class="input-group">
         <label asp-for="CurrentUser.IdAssemblee">Assemblée</label>
@@ -44,7 +47,7 @@
         </select>
     </div>
     <div class="input-group">
-        <label asp-for="CurrentUser.Droit">Assemblée</label>
+        <label asp-for="CurrentUser.Droit">Droit</label>
         <select asp-for="CurrentUser.Droit" class="form-control">
             @foreach (var droit in Model.AllDroits)
             {
