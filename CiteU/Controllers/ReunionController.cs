@@ -52,6 +52,7 @@ namespace CiteU.Controllers
             return View(vm);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpGet]
         public IActionResult EditPage(int IdReunion)
         {
@@ -65,6 +66,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpPost]
         public IActionResult Edit(ReunionEditViewModel reunion)
         {
@@ -76,6 +78,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Reunion", Reunion.IdReunion);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpGet]
         public IActionResult CreatePage()
         {
@@ -88,6 +91,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpPost]
         public IActionResult Create(ReunionEditViewModel reunion)
         {
@@ -99,6 +103,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Reunion", Reunion.IdReunion);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpPost]
         public IActionResult Delete(int IdReunion)
         {

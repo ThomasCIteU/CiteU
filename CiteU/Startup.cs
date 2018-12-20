@@ -50,6 +50,16 @@ namespace CiteU
             services.AddTransient<IDroitRepository, DroitRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Administrateur", policy => policy.RequireClaim("Administrateur"));
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Responsable", policy => policy.RequireClaim("Responsable"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

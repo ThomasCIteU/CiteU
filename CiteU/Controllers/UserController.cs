@@ -54,6 +54,7 @@ namespace CiteU.Controllers
             return View(vm);
         }
 
+        [Authorize(Policy = "Proclamateur")]
         [HttpGet]
         public IActionResult EditPage(int IdUser)
         {
@@ -67,6 +68,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpGet]
         public IActionResult CreatePage()
         {
@@ -79,6 +81,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpPost]
         public IActionResult Create(UserEditViewModel User)
         {
@@ -88,6 +91,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "User");
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpPost]
         //public IActionResult Edit(int IdUser, string Nom, string Prenom, char Sexe, string Mail, string Phone, string Assemblee, string Privilege)
         public IActionResult Edit(UserEditViewModel user)
@@ -98,6 +102,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "User", usr.IdUser);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpPost]
         public IActionResult Delete(int IdUser)
         {

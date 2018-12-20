@@ -42,6 +42,7 @@ namespace CiteU.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "Administrateur")]
         public IActionResult EditPage(int IdLangue)
         {
             var vm = new LangueEditViewModel()
@@ -52,6 +53,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpPost]
         public IActionResult Edit(LangueEditViewModel Languevm)
         {
@@ -61,6 +63,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Langue", Langue.IdLangue);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpGet]
         public IActionResult CreatePage()
         {
@@ -71,6 +74,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpPost]
         public IActionResult Create(LangueEditViewModel Languevm)
         {
@@ -80,6 +84,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Langue", Langue.IdLangue);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpPost]
         public IActionResult Delete(int IdLangue)
         {

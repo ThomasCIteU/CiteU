@@ -45,6 +45,7 @@ namespace CiteU.Controllers
             return View(vm);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpGet]
         public IActionResult EditPage(int IdAssemblee)
         {
@@ -57,6 +58,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpPost]
         public IActionResult Edit(AssembleeEditViewModel assemblee)
         {
@@ -66,6 +68,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Assemblee", Assemblee.IdAssemblee);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpGet]
         public IActionResult CreatePage()
         {
@@ -77,6 +80,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpPost]
         public IActionResult Create(AssembleeEditViewModel assemblee)
         {
@@ -86,6 +90,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Assemblee", Assemblee.IdAssemblee);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpPost]
         public IActionResult Delete(int IdAssemblee)
         {

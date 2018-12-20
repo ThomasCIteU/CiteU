@@ -32,7 +32,8 @@ namespace DatabaseAccess.Login
                                 Mail = rdr["Mail"].ToString(),
                                 Phone = rdr["Phone"].ToString(),
                                 IdAssemblee = Convert.ToInt16(rdr["Assemblee"]),
-                                Privilege = rdr["Privilege"].ToString()
+                                Privilege = rdr["Privilege"].ToString(),
+                                Droit = Convert.ToInt16(rdr["idDroit"])
                             };
                             cnn.Close();
                             rdr.Close();

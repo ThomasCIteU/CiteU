@@ -47,6 +47,7 @@ namespace CiteU.Controllers
             return View(vm);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpGet]
         public IActionResult EditPage(int IdPole)
         {
@@ -59,6 +60,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpPost]
         public IActionResult Edit(PoleEditViewModel Pole)
         {
@@ -68,6 +70,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Pole", pole.IdPole);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpGet]
         public IActionResult CreatePage()
         {
@@ -79,6 +82,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpPost]
         public IActionResult Create(PoleEditViewModel Pole)
         {
@@ -88,6 +92,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Pole", pole.IdPole);
         }
 
+        [Authorize(Policy = "Administrateur")]
         [HttpPost]
         public IActionResult Delete(int IdPole)
         {

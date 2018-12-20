@@ -64,9 +64,22 @@ namespace CiteU.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Nom),
-                new Claim("FullName", user.Prenom),
-                new Claim(ClaimTypes.Role, "Administrator"),
+                new Claim("FullName", user.Prenom)
             };
+            switch (user.Droit)
+            {
+                case 1:
+                    claims.Add(new Claim("Proclamateur", "Proclamateur"));
+                    break;
+
+                case 2:
+                    claims.Add(new Claim("Responsable", "Responsable"));
+                    break;
+
+                case 3:
+                    claims.Add(new Claim("Administrateur", "Administrateur"));
+                    break;
+            }
 
             var claimsIdentity = new ClaimsIdentity(
                 claims, CookieAuthenticationDefaults.AuthenticationScheme);
