@@ -53,12 +53,12 @@ namespace CiteU
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Administrateur", policy => policy.RequireClaim("Administrateur"));
+                options.AddPolicy("Administrateur", policy => policy.RequireClaim("Droit", "Administrateur"));
             });
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Responsable", policy => policy.RequireClaim("Responsable"));
+                options.AddPolicy("Responsable", policy => policy.RequireClaim("Droit", "Responsable", "Administrateur"));
             });
         }
 

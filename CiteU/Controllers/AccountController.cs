@@ -69,15 +69,15 @@ namespace CiteU.Controllers
             switch (user.Droit)
             {
                 case 1:
-                    claims.Add(new Claim("Proclamateur", "Proclamateur"));
+                    claims.Add(new Claim("Droit", "Proclamateur"));
                     break;
 
                 case 2:
-                    claims.Add(new Claim("Responsable", "Responsable"));
+                    claims.Add(new Claim("Droit", "Responsable"));
                     break;
 
                 case 3:
-                    claims.Add(new Claim("Administrateur", "Administrateur"));
+                    claims.Add(new Claim("Droit", "Administrateur"));
                     break;
             }
 
