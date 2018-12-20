@@ -7,6 +7,7 @@ namespace DatabaseAccess.User
     public interface IUserRepository
     {
         List<UserModel> GetUsers();
+        List<UserModel> GetUsersByPole(int idPole);
         UserModel GetUser(int idUser);
         void EditUser(int IdUser, string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege, int Droit);
         void DeleteUser(int IdUser);

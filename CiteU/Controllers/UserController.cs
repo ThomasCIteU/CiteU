@@ -33,7 +33,15 @@ namespace CiteU.Controllers
 
             ViewData["CanEdit"] = (role == ClaimCiteU.Administrateur);
             var listUsers = new List<UserViewModel>();
-            var list = _userRepository.GetUsers();
+            var list = new List<UserModel>();
+            if (role == ClaimCiteU.Administrateur)
+            {
+                list = _userRepository.GetUsers();
+            }
+            else
+            {
+                list = _userRepository.GetUsersByPole(poleUser);
+            }
             foreach (var user in list)
             {
                 listUsers.Add(new UserViewModel()
