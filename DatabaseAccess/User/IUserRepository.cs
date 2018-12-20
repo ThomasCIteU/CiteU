@@ -8,8 +8,8 @@ namespace DatabaseAccess.User
     {
         List<UserModel> GetUsers();
         UserModel GetUser(int idUser);
-        void EditUser(int IdUser, string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege);
+        void EditUser(int IdUser, string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege, int Droit);
         void DeleteUser(int IdUser);
-        void CreateUser(string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege);
+        void CreateUser(string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege, int Droit);
     }
 }

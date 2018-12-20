@@ -43,6 +43,15 @@
             }
         </select>
     </div>
+    <div class="input-group">
+        <label asp-for="CurrentUser.Droit">Assemblée</label>
+        <select asp-for="CurrentUser.Droit" class="form-control">
+            @foreach (var droit in Model.AllDroits)
+            {
+                <option value="@droit.IdDroit">@droit.Libelle</option>
+            }
+        </select>
+    </div>
 
     <button type="submit" class="btn btn-success">Valider</button>
 </form>

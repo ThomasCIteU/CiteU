@@ -14,5 +14,6 @@ namespace DatabaseAccess.User
         public string Phone { get; set; }
         public int IdAssemblee { get; set; }
         public string Privilege { get; set; }
+        public int Droit { get; set; }
     }
 }

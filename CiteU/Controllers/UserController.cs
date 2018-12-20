@@ -9,6 +9,7 @@ using DatabaseAccess.User;
 using CiteU.Models.User;
 using DatabaseAccess.Assemblee;
 using Microsoft.AspNetCore.Authorization;
+using DatabaseAccess.Droit;
 
 namespace CiteU.Controllers
 {
@@ -17,10 +18,12 @@ namespace CiteU.Controllers
     {
         public readonly IUserRepository _userRepository;
         public readonly IAssembleeRepository _assembleeRepository;
-        public UserController (IUserRepository userRepository, IAssembleeRepository assembleeRepository)
+        public readonly IDroitRepository _droitRepository;
+        public UserController (IUserRepository userRepository, IAssembleeRepository assembleeRepository, IDroitRepository droitRepository)
         {
             _userRepository = userRepository;
             _assembleeRepository = assembleeRepository;
+            _droitRepository = droitRepository;
         }
 
         [HttpGet]
@@ -40,8 +43,9 @@ namespace CiteU.Controllers
                     Phone = user.Phone,
                     IdAssemblee = user.IdAssemblee,
                     NomAssemblee = _assembleeRepository.GetAssemblee(user.IdAssemblee)?.Nom,
-                    Privilege = user.Privilege
-    });
+                    Privilege = user.Privilege, 
+                    Droit = _droitRepository.getDroit(user.Droit)?.Libelle
+                });
             }
             var vm = new UsersViewModel()
             {
@@ -57,6 +61,7 @@ namespace CiteU.Controllers
             {
                 CurrentUser = _userRepository.GetUser(IdUser),
                 AllAssemblees = _assembleeRepository.GetAssemblees(),
+                AllDroits = _droitRepository.getAllDroits(),
                 IsCreation = false
             };
             return View("edit", vm);
@@ -68,6 +73,7 @@ namespace CiteU.Controllers
             var vm = new UserEditViewModel()
             {
                 AllAssemblees = _assembleeRepository.GetAssemblees(),
+                AllDroits = _droitRepository.getAllDroits(),
                 IsCreation = true
             };
             return View("edit", vm);
@@ -77,7 +83,7 @@ namespace CiteU.Controllers
         public IActionResult Create(UserEditViewModel User)
         {
             var user = User.CurrentUser;
-            _userRepository.CreateUser(user.Nom, user.Prenom, user.Sexe, user.Mail, user.Phone, user.IdAssemblee, user.Privilege);
+            _userRepository.CreateUser(user.Nom, user.Prenom, user.Sexe, user.Mail, user.Phone, user.IdAssemblee, user.Privilege, user.Droit);
 
             return RedirectToAction("Index", "User");
         }
@@ -87,7 +93,7 @@ namespace CiteU.Controllers
         public IActionResult Edit(UserEditViewModel user)
         {
             var usr = user.CurrentUser;
-            _userRepository.EditUser(usr.IdUser, usr.Nom, usr.Prenom, usr.Sexe, usr.Mail, usr.Phone, usr.IdAssemblee, usr.Privilege);
+            _userRepository.EditUser(usr.IdUser, usr.Nom, usr.Prenom, usr.Sexe, usr.Mail, usr.Phone, usr.IdAssemblee, usr.Privilege, usr.Droit);
 
             return RedirectToAction("Index", "User", usr.IdUser);
         }

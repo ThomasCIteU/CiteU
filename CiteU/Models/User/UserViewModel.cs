@@ -21,5 +21,6 @@ namespace CiteU.Models.User
         public int IdAssemblee { get; set; }
         public string NomAssemblee { get; set; }
         public string Privilege { get; set; }
+        public string Droit { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DatabaseAccess.Assemblee;
+using DatabaseAccess.Droit;
 using DatabaseAccess.Langue;
 using DatabaseAccess.Login;
 using DatabaseAccess.Pole;
@@ -46,6 +47,7 @@ namespace CiteU
             services.AddTransient<IAssembleeRepository, AssembleeRepository>();
             services.AddTransient<IReunionRepository, ReunionRepository>();
             services.AddTransient<ILoginRepository, LoginRepository>();
+            services.AddTransient<IDroitRepository, DroitRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

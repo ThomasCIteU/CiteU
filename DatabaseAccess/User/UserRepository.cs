@@ -15,7 +15,7 @@ namespace DatabaseAccess.User
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = "SELECT idUser, Nom, Prenom, Sexe, Mail, Phone, Assemblee, Privilege FROM user U ";
+                string sql = "SELECT idUser, Nom, Prenom, Sexe, Mail, Phone, Assemblee, Privilege, idDroit FROM user U ";
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 MySqlDataReader rdr = cmd.ExecuteReader();
                 var listUsers = new List<UserModel>();
@@ -31,7 +31,8 @@ namespace DatabaseAccess.User
                         Mail = rdr["Mail"].ToString(),
                         Phone = rdr["Phone"].ToString(),
                         IdAssemblee = Convert.ToInt16(rdr["Assemblee"]),
-                        Privilege = rdr["Privilege"].ToString()
+                        Privilege = rdr["Privilege"].ToString(),
+                        Droit = Convert.ToInt16(rdr["idDroit"])
                         }
                     );
                 }
@@ -66,7 +67,8 @@ namespace DatabaseAccess.User
                         Mail = rdr["Mail"].ToString(),
                         Phone = rdr["Phone"].ToString(),
                         IdAssemblee = Convert.ToInt16(rdr["Assemblee"]),
-                        Privilege = rdr["Privilege"].ToString()
+                        Privilege = rdr["Privilege"].ToString(),
+                        Droit = Convert.ToInt16(rdr["idDroit"])
                     };
                 }
                 rdr.Close();
@@ -83,7 +85,7 @@ namespace DatabaseAccess.User
             }
         }
 
-        public void EditUser(int IdUser, string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege)
+        public void EditUser(int IdUser, string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege, int Droit)
         {
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
@@ -95,7 +97,8 @@ namespace DatabaseAccess.User
                     $"Mail = @Mail, " +
                     $"Phone = @Phone, " +
                     $"Assemblee = @Assemblee, " +
-                    $"Privilege = @Privilege " +
+                    $"Privilege = @Privilege, " +
+                    $"idDroit = @Droit " +
                     $"WHERE idUser=@idUser";
 
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
@@ -107,6 +110,7 @@ namespace DatabaseAccess.User
                 cmd.Parameters.AddWithValue("@Assemblee", Assemblee);
                 cmd.Parameters.AddWithValue("@Privilege", Privilege);
                 cmd.Parameters.AddWithValue("@idUser", IdUser);
+                cmd.Parameters.AddWithValue("@Droit", Droit);
 
                 cmd.ExecuteNonQuery();
 
@@ -139,19 +143,20 @@ namespace DatabaseAccess.User
             }
         }
 
-        public void CreateUser(string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege)
+        public void CreateUser(string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege, int Droit)
         {
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = $"INSERT INTO user (Nom, Prenom, Sexe, Mail, Phone, Assemblee, Privilege) VALUES( " +
+                string sql = $"INSERT INTO user (Nom, Prenom, Sexe, Mail, Phone, Assemblee, Privilege, idDroit) VALUES( " +
                     $"@Nom, " +
                     $"@Prenom, " +
                     $"@Sexe, " +
                     $"@Mail, " +
                     $"@Phone, " +
                     $"@Assemblee, " +
-                    $"@Privilege)";
+                    $"@Privilege, " +
+                    $"@Droit)";
 
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@Nom", Nom);
@@ -161,6 +166,7 @@ namespace DatabaseAccess.User
                 cmd.Parameters.AddWithValue("@Phone", Phone);
                 cmd.Parameters.AddWithValue("@Assemblee", Assemblee);
                 cmd.Parameters.AddWithValue("@Privilege", Privilege);
+                cmd.Parameters.AddWithValue("@Droit", Droit);
 
                 cmd.ExecuteNonQuery();
 
