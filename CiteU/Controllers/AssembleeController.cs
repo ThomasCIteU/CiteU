@@ -33,6 +33,8 @@ namespace CiteU.Controllers
             int pole = ClaimCiteU.getPoleFromClaim(identity.Claims);
             string role = ClaimCiteU.getDroitFromClaim(identity.Claims);
 
+            ViewData["CanEdit"] = (role == ClaimCiteU.Administrateur);
+
             var listDesAssemblees = new List<AssembleeViewModel>();
             var list = new List<AssembleeModel>();
             if(role == ClaimCiteU.Administrateur)
