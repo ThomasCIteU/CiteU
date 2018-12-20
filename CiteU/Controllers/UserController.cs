@@ -92,9 +92,8 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "User");
         }
 
-        [Authorize(Policy = ClaimCiteU.Administrateur)]
+        [Authorize(Policy = ClaimCiteU.Proclamateur)]
         [HttpPost]
-        //public IActionResult Edit(int IdUser, string Nom, string Prenom, char Sexe, string Mail, string Phone, string Assemblee, string Privilege)
         public IActionResult Edit(UserEditViewModel user)
         {
             var usr = user.CurrentUser;
