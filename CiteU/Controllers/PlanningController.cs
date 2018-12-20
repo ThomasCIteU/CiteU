@@ -47,7 +47,7 @@ namespace CiteU.Controllers
                         listMonthDays.Add(listWeekDays.ToList());
                         listWeekDays = new List<DayViewModel>();
                     }
-                    var reunion = _ReunionRepository.GetReunion(aDay);
+                    var reunion = _ReunionRepository.GetReunion(aDay, pole);
                     if (reunion != null)
                     {
                         listWeekDays.Add(new DayViewModel

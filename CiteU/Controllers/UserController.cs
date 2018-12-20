@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using CiteU.Models;
 using DatabaseAccess.User;
 using CiteU.Models.User;
 using DatabaseAccess.Assemblee;

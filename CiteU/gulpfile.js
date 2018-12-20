@@ -42,3 +42,9 @@ gulp.task('watch', gulp.series('sass',
 gulp.task('default', gulp.series('sass',
     gulp.parallel('message', 'watch')
 ));
+
+gulp.task('build', function () {
+    return gulp.src('/**/*.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('dist'))
+});

@@ -44,12 +44,10 @@
                             <li><a asp-area="" asp-controller="Reunion" asp-action="Index">Les réunions</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <form asp-controller="Account" asp-action="Logout" method="get">
-                            <button type="submit" class="btn btn-danger">Déconnexion</button>
-                        </form>
-                    </li>
                 </ul>
+                <form id="form-logout" asp-controller="Account" asp-action="Logout" method="get">
+                    <button type="submit" class="btn btn-danger">Déconnexion</button>
+                </form>
             </div>
         </div>
     </nav>

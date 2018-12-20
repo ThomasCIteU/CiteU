@@ -45,6 +45,40 @@ namespace DatabaseAccess.Reunion
             }
         }
 
+        public List<ReunionModel> GetAllReunions(int idPole)
+        {
+            MySqlConnection cnn = BDDRepository.OpenConnexion();
+            try
+            {
+                string sql = "SELECT * FROM reunion WHERE IdPole = @idPole";
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@idPole", idPole);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+                var reunionModel = new List<ReunionModel>();
+                while (rdr.Read())
+                {
+                    reunionModel.Add(
+                        new ReunionModel()
+                        {
+                            IdReunion = Convert.ToInt16(rdr["idreunion"]),
+                            Date = Convert.ToDateTime(rdr["Date"]),
+                            IdResponsable = Convert.ToInt16(rdr["IdResponsable"]),
+                            IdCreateur = Convert.ToInt16(rdr["IdCreateur"]),
+                            Lieu = rdr["Lieu"].ToString(),
+                            IdPole = Convert.ToInt16(rdr["IdPole"])
+                        }
+                    );
+                }
+                rdr.Close();
+                cnn.Close();
+                return reunionModel;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public void CreateReunion(DateTime date, int idResponsable, int idCreateur, string lieu, int idPole)
         {
@@ -170,6 +204,43 @@ namespace DatabaseAccess.Reunion
                 string sql = "SELECT * FROM reunion WHERE CAST(Date AS DATE) =@date";
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@Date", date.ToString("yyyy-MM-dd"));
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                ReunionModel Reunion = null;
+                if (rdr.Read())
+                {
+                    Reunion = new ReunionModel()
+                    {
+                        IdReunion = Convert.ToInt16(rdr["idreunion"]),
+                        Date = Convert.ToDateTime(rdr["Date"]),
+                        IdResponsable = Convert.ToInt16(rdr["IdResponsable"]),
+                        IdCreateur = Convert.ToInt16(rdr["IdCreateur"]),
+                        Lieu = rdr["Lieu"].ToString(),
+                        IdPole = Convert.ToInt16(rdr["IdPole"])
+                    };
+                }
+                rdr.Close();
+                cnn.Close();
+                if (Reunion == null)
+                {
+                    return null;
+                }
+                return Reunion;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ReunionModel GetReunion(DateTime date, int idPole)
+        {
+            MySqlConnection cnn = BDDRepository.OpenConnexion();
+            try
+            {
+                string sql = "SELECT * FROM reunion WHERE CAST(Date AS DATE) =@date AND IdPole = @idPole";
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@Date", date.ToString("yyyy-MM-dd"));
+                cmd.Parameters.AddWithValue("@idPole", idPole);
                 MySqlDataReader rdr = cmd.ExecuteReader();
                 ReunionModel Reunion = null;
                 if (rdr.Read())

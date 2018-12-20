@@ -38,7 +38,16 @@ namespace CiteU.Controllers
             ViewData["CanEdit"] = (role != ClaimCiteU.Proclamateur);
 
             var listDesReunions = new List<ReunionViewModel>();
-            var list = _ReunionRepository.GetAllReunions();
+            var list = new List<ReunionModel>();
+
+            if (role == ClaimCiteU.Administrateur)
+            {
+                list = _ReunionRepository.GetAllReunions();
+            }
+            else
+            {
+                list = _ReunionRepository.GetAllReunions(pole);
+            }
             foreach (var Reunion in list)
             {
                 var responsable = _userRepository.GetUser(Reunion.IdResponsable);
