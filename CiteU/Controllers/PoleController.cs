@@ -9,6 +9,7 @@ using DatabaseAccess.Pole;
 using CiteU.Models.Pole;
 using DatabaseAccess.User;
 using Microsoft.AspNetCore.Authorization;
+using CiteU.Models.Helper;
 
 namespace CiteU.Controllers
 {
@@ -47,7 +48,7 @@ namespace CiteU.Controllers
             return View(vm);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpGet]
         public IActionResult EditPage(int IdPole)
         {
@@ -60,7 +61,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpPost]
         public IActionResult Edit(PoleEditViewModel Pole)
         {
@@ -70,7 +71,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Pole", pole.IdPole);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpGet]
         public IActionResult CreatePage()
         {
@@ -82,7 +83,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpPost]
         public IActionResult Create(PoleEditViewModel Pole)
         {
@@ -92,7 +93,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Pole", pole.IdPole);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpPost]
         public IActionResult Delete(int IdPole)
         {

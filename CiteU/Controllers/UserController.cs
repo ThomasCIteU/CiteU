@@ -10,6 +10,7 @@ using CiteU.Models.User;
 using DatabaseAccess.Assemblee;
 using Microsoft.AspNetCore.Authorization;
 using DatabaseAccess.Droit;
+using CiteU.Models.Helper;
 
 namespace CiteU.Controllers
 {
@@ -54,7 +55,7 @@ namespace CiteU.Controllers
             return View(vm);
         }
 
-        [Authorize(Policy = "Proclamateur")]
+        [Authorize(Policy = ClaimCiteU.Proclamateur)]
         [HttpGet]
         public IActionResult EditPage(int IdUser)
         {
@@ -68,7 +69,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpGet]
         public IActionResult CreatePage()
         {
@@ -81,7 +82,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpPost]
         public IActionResult Create(UserEditViewModel User)
         {
@@ -91,7 +92,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "User");
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpPost]
         //public IActionResult Edit(int IdUser, string Nom, string Prenom, char Sexe, string Mail, string Phone, string Assemblee, string Privilege)
         public IActionResult Edit(UserEditViewModel user)
@@ -102,7 +103,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "User", usr.IdUser);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpPost]
         public IActionResult Delete(int IdUser)
         {

@@ -12,15 +12,20 @@ using DatabaseAccess.Login;
 using DatabaseAccess.User;
 using Microsoft.AspNetCore.Authorization;
 using CiteU.Models.Login;
+using Microsoft.AspNetCore.Http;
+using CiteU.Models.Helper;
+using DatabaseAccess.Pole;
 
 namespace CiteU.Controllers
 {
     public class AccountController : Controller
     {
         public readonly ILoginRepository _loginRepository;
-        public AccountController(ILoginRepository loginRepository)
+        public readonly IPoleRepository _poleRepository;
+        public AccountController(ILoginRepository loginRepository, IPoleRepository poleRepository)
         {
             _loginRepository = loginRepository;
+            _poleRepository = poleRepository;
         }
 
         [AllowAnonymous]
@@ -64,20 +69,22 @@ namespace CiteU.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Nom),
-                new Claim("FullName", user.Prenom)
+                new Claim("FullName", user.Prenom),
+                new Claim("Pole", _poleRepository.GetPoleFromUser(user.IdUser).ToString())
+
             };
             switch (user.Droit)
             {
                 case 1:
-                    claims.Add(new Claim("Droit", "Proclamateur"));
+                    claims.Add(new Claim("Droit", ClaimCiteU.Proclamateur));
                     break;
 
                 case 2:
-                    claims.Add(new Claim("Droit", "Responsable"));
+                    claims.Add(new Claim("Droit", ClaimCiteU.Responsable));
                     break;
 
                 case 3:
-                    claims.Add(new Claim("Droit", "Administrateur"));
+                    claims.Add(new Claim("Droit", ClaimCiteU.Administrateur));
                     break;
             }
 

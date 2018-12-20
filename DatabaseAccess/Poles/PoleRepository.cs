@@ -76,6 +76,34 @@ namespace DatabaseAccess.Pole
             }
         }
 
+        public int GetPoleFromUser(int idUser)
+        {
+            MySqlConnection cnn = BDDRepository.OpenConnexion();
+            try
+            {
+                string sql = "SELECT idPole FROM user u left join assemblee a on a.idassemblee = u.Assemblee where idUser = @idUser";
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@idUser", idUser);
+                MySqlDataReader rdrPole = cmd.ExecuteReader();
+                int pole = 0;
+                if (rdrPole.Read())
+                {
+                    pole = Convert.ToInt16(rdrPole["idPole"]);
+                }
+                rdrPole.Close();
+                cnn.Close();
+                if (pole == 0)
+                {
+                    throw new Exception("Impossible de retrouver le pôle de l'utilisateur");
+                }
+                return pole;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public void EditPole(int IdPole, string Libelle, int idResponsable, int idAdjoint)
         {
             MySqlConnection cnn = BDDRepository.OpenConnexion();

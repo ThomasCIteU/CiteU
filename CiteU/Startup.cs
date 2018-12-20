@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CiteU.Models.Helper;
 using DatabaseAccess.Assemblee;
 using DatabaseAccess.Droit;
 using DatabaseAccess.Langue;
@@ -53,12 +54,17 @@ namespace CiteU
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Administrateur", policy => policy.RequireClaim("Droit", "Administrateur"));
+                options.AddPolicy(ClaimCiteU.Administrateur, policy => policy.RequireClaim("Droit", ClaimCiteU.Administrateur));
             });
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Responsable", policy => policy.RequireClaim("Droit", "Responsable", "Administrateur"));
+                options.AddPolicy(ClaimCiteU.Responsable, policy => policy.RequireClaim("Droit", ClaimCiteU.Responsable, ClaimCiteU.Administrateur));
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Proclamateur", policy => policy.RequireClaim("Droit", ClaimCiteU.Proclamateur, ClaimCiteU.Responsable, ClaimCiteU.Administrateur));
             });
         }
 

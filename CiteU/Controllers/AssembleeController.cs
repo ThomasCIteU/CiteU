@@ -9,6 +9,8 @@ using DatabaseAccess.Assemblee;
 using CiteU.Models.Assemblee;
 using DatabaseAccess.Pole;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using CiteU.Models.Helper;
 
 namespace CiteU.Controllers
 {
@@ -26,8 +28,22 @@ namespace CiteU.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            var identity = (ClaimsIdentity)User.Identity;
+
+            int pole = ClaimCiteU.getPoleFromClaim(identity.Claims);
+            string role = ClaimCiteU.getDroitFromClaim(identity.Claims);
+
             var listDesAssemblees = new List<AssembleeViewModel>();
-            var list = _assembleeRepository.GetAssemblees();
+            var list = new List<AssembleeModel>();
+            if(role == ClaimCiteU.Administrateur)
+            {
+                list = _assembleeRepository.GetAssemblees();
+            }
+            else
+            {
+                list = _assembleeRepository.GetAssemblees(pole);
+            }
+
             foreach (var Assemblee in list)
             {
                 listDesAssemblees.Add(new AssembleeViewModel()
@@ -45,7 +61,7 @@ namespace CiteU.Controllers
             return View(vm);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpGet]
         public IActionResult EditPage(int IdAssemblee)
         {
@@ -58,7 +74,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpPost]
         public IActionResult Edit(AssembleeEditViewModel assemblee)
         {
@@ -68,7 +84,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Assemblee", Assemblee.IdAssemblee);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpGet]
         public IActionResult CreatePage()
         {
@@ -80,7 +96,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpPost]
         public IActionResult Create(AssembleeEditViewModel assemblee)
         {
@@ -90,7 +106,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Assemblee", Assemblee.IdAssemblee);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpPost]
         public IActionResult Delete(int IdAssemblee)
         {

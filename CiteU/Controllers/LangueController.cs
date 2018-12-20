@@ -9,6 +9,7 @@ using DatabaseAccess.Langue;
 using CiteU.Models.Langue;
 using DatabaseAccess.User;
 using Microsoft.AspNetCore.Authorization;
+using CiteU.Models.Helper;
 
 namespace CiteU.Controllers
 {
@@ -42,7 +43,7 @@ namespace CiteU.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         public IActionResult EditPage(int IdLangue)
         {
             var vm = new LangueEditViewModel()
@@ -53,7 +54,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpPost]
         public IActionResult Edit(LangueEditViewModel Languevm)
         {
@@ -63,7 +64,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Langue", Langue.IdLangue);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpGet]
         public IActionResult CreatePage()
         {
@@ -74,7 +75,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpPost]
         public IActionResult Create(LangueEditViewModel Languevm)
         {
@@ -84,7 +85,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Langue", Langue.IdLangue);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpPost]
         public IActionResult Delete(int IdLangue)
         {

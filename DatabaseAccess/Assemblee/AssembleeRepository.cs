@@ -41,6 +41,38 @@ namespace DatabaseAccess.Assemblee
             }
         }
 
+        public List<AssembleeModel> GetAssemblees(int idPole)
+        {
+            MySqlConnection cnn = BDDRepository.OpenConnexion();
+            try
+            {
+                string sql = "SELECT * FROM assemblee where IdPole = @idPole";
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@idPole", idPole);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                var listAssembblee = new List<AssembleeModel>();
+                while (rdr.Read())
+                {
+                    listAssembblee.Add(
+                        new AssembleeModel()
+                        {
+                            IdAssemblee = Convert.ToInt16(rdr["idassemblee"]),
+                            Nom = rdr["Nom"].ToString(),
+                            IdPole = Convert.ToInt16(rdr["IdPole"])
+                        }
+                    );
+                }
+                rdr.Close();
+
+                cnn.Close();
+                return listAssembblee;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public AssembleeModel GetAssemblee(int idAssemblee)
         {
             MySqlConnection cnn = BDDRepository.OpenConnexion();

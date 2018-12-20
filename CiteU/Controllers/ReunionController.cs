@@ -10,6 +10,7 @@ using CiteU.Models.Reunion;
 using DatabaseAccess.User;
 using Microsoft.AspNetCore.Authorization;
 using DatabaseAccess.Pole;
+using CiteU.Models.Helper;
 
 namespace CiteU.Controllers
 {
@@ -52,7 +53,7 @@ namespace CiteU.Controllers
             return View(vm);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpGet]
         public IActionResult EditPage(int IdReunion)
         {
@@ -66,7 +67,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpPost]
         public IActionResult Edit(ReunionEditViewModel reunion)
         {
@@ -78,7 +79,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Reunion", Reunion.IdReunion);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpGet]
         public IActionResult CreatePage()
         {
@@ -91,7 +92,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpPost]
         public IActionResult Create(ReunionEditViewModel reunion)
         {
@@ -103,7 +104,7 @@ namespace CiteU.Controllers
             return RedirectToAction("Index", "Reunion", Reunion.IdReunion);
         }
 
-        [Authorize(Policy = "Administrateur")]
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpPost]
         public IActionResult Delete(int IdReunion)
         {

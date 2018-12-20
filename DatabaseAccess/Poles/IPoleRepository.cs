@@ -8,6 +8,7 @@ namespace DatabaseAccess.Pole
     {
         List<PoleModel> GetPoles();
         PoleModel GetPole(int idPole);
+        int GetPoleFromUser(int idUser);
         void EditPole(int IdPole, string Libelle, int idResponsable, int idAdjoint);
         void DeletePole(int IdPole);
         void CreatePole(string libelle, int idResponsable, int idAdjoint);
