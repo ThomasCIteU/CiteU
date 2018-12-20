@@ -10,6 +10,7 @@ using CiteU.Models.Pole;
 using DatabaseAccess.User;
 using Microsoft.AspNetCore.Authorization;
 using CiteU.Models.Helper;
+using System.Security.Claims;
 
 namespace CiteU.Controllers
 {
@@ -27,6 +28,12 @@ namespace CiteU.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            var identity = (ClaimsIdentity)User.Identity;
+
+            int poleUser = ClaimCiteU.getPoleFromClaim(identity.Claims);
+            string role = ClaimCiteU.getDroitFromClaim(identity.Claims);
+
+            ViewData["CanEdit"] = (role == ClaimCiteU.Administrateur);
             var listDesPoles = new List<PoleViewModel>();
             var list = _poleRepository.GetPoles();
             foreach(var pole in list)

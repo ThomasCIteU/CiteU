@@ -9,6 +9,8 @@ using CiteU.Models.Planning;
 using DatabaseAccess.Reunion;
 using DatabaseAccess.User;
 using DatabaseAccess.Pole;
+using CiteU.Models.Helper;
+using System.Security.Claims;
 
 namespace CiteU.Controllers
 {
@@ -26,6 +28,11 @@ namespace CiteU.Controllers
 
         public IActionResult Index(int year = 2018, int month = 12)
         {
+            var identity = (ClaimsIdentity)User.Identity;
+
+            int pole = ClaimCiteU.getPoleFromClaim(identity.Claims);
+            string role = ClaimCiteU.getDroitFromClaim(identity.Claims);
+            ViewData["CanEdit"] = (role != ClaimCiteU.Proclamateur);
             var listMonthDays = new List<List<DayViewModel>>();
             int days = DateTime.DaysInMonth(year, month);
             var listWeekDays = new List<DayViewModel>();

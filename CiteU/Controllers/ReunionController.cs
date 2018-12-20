@@ -11,6 +11,7 @@ using DatabaseAccess.User;
 using Microsoft.AspNetCore.Authorization;
 using DatabaseAccess.Pole;
 using CiteU.Models.Helper;
+using System.Security.Claims;
 
 namespace CiteU.Controllers
 {
@@ -30,6 +31,12 @@ namespace CiteU.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            var identity = (ClaimsIdentity)User.Identity;
+
+            int pole = ClaimCiteU.getPoleFromClaim(identity.Claims);
+            string role = ClaimCiteU.getDroitFromClaim(identity.Claims);
+            ViewData["CanEdit"] = (role != ClaimCiteU.Proclamateur);
+
             var listDesReunions = new List<ReunionViewModel>();
             var list = _ReunionRepository.GetAllReunions();
             foreach (var Reunion in list)

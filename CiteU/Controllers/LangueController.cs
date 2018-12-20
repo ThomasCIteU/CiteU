@@ -10,6 +10,7 @@ using CiteU.Models.Langue;
 using DatabaseAccess.User;
 using Microsoft.AspNetCore.Authorization;
 using CiteU.Models.Helper;
+using System.Security.Claims;
 
 namespace CiteU.Controllers
 {
@@ -25,6 +26,12 @@ namespace CiteU.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            var identity = (ClaimsIdentity)User.Identity;
+
+            int pole = ClaimCiteU.getPoleFromClaim(identity.Claims);
+            string role = ClaimCiteU.getDroitFromClaim(identity.Claims);
+
+            ViewData["CanEdit"] = (role == ClaimCiteU.Administrateur);
             var listDesLangues = new List<LangueViewModel>();
             var list = _LangueRepository.GetLangues();
             foreach(var Langue in list)
