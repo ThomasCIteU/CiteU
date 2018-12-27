@@ -11,6 +11,8 @@ using DatabaseAccess.User;
 using DatabaseAccess.Pole;
 using CiteU.Models.Helper;
 using System.Security.Claims;
+using DatabaseAccess.Participation;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CiteU.Controllers
 {
@@ -19,11 +21,13 @@ namespace CiteU.Controllers
         public readonly IReunionRepository _ReunionRepository;
         public readonly IUserRepository _userRepository;
         public readonly IPoleRepository _poleRepository;
-        public PlanningController(IReunionRepository ReunionRepository, IUserRepository userRepository, IPoleRepository poleRepository)
+        public readonly IParticipationRepository _participationRepository;
+        public PlanningController(IReunionRepository ReunionRepository, IUserRepository userRepository, IPoleRepository poleRepository, IParticipationRepository participationRepository)
         {
             _ReunionRepository = ReunionRepository;
             _userRepository = userRepository;
             _poleRepository = poleRepository;
+            _participationRepository = participationRepository;
         }
 
         public IActionResult Index(int year = 2018, int month = 12)
@@ -80,6 +84,16 @@ namespace CiteU.Controllers
                 Actual = new DateTime(year, month, 1)
             };
             return View(vm);
+        }
+
+        [Authorize(Policy = ClaimCiteU.Proclamateur)]
+        [HttpPost]
+        public IActionResult Participer(int IdReunion)
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            int idUser = ClaimCiteU.getIdUserFromClaim(identity.Claims);
+            _participationRepository.CreateParticipation(IdReunion, idUser);
+            return RedirectToAction("Index", "Planning");
         }
     }
 }

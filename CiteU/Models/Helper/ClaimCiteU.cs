@@ -13,6 +13,11 @@ namespace CiteU.Models.Helper
             return Convert.ToInt16(claims.Where(w => w.Type == "Pole").FirstOrDefault().Value);
         }
 
+        public static int getIdUserFromClaim(IEnumerable<Claim> claims)
+        {
+            return Convert.ToInt16(claims.Where(w => w.Type == "ID").FirstOrDefault().Value);
+        }
+
         public static string getDroitFromClaim(IEnumerable<Claim> claims)
         {
             return claims.Where(w => w.Type == "Droit").FirstOrDefault().Value;

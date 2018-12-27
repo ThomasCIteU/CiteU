@@ -70,8 +70,8 @@ namespace CiteU.Controllers
             {
                 new Claim(ClaimTypes.Name, user.Nom),
                 new Claim("FullName", user.Prenom),
-                new Claim("Pole", _poleRepository.GetPoleFromUser(user.IdUser).ToString())
-
+                new Claim("Pole", _poleRepository.GetPoleFromUser(user.IdUser).ToString()),
+                new Claim("ID", user.IdUser.ToString())
             };
             switch (user.Droit)
             {
