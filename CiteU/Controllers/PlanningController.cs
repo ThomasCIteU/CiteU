@@ -36,6 +36,7 @@ namespace CiteU.Controllers
 
             int pole = ClaimCiteU.getPoleFromClaim(identity.Claims);
             string role = ClaimCiteU.getDroitFromClaim(identity.Claims);
+            int idUser = ClaimCiteU.getIdUserFromClaim(identity.Claims);
             ViewData["CanEdit"] = (role != ClaimCiteU.Proclamateur);
             var listMonthDays = new List<List<DayViewModel>>();
             int days = DateTime.DaysInMonth(year, month);
@@ -54,6 +55,8 @@ namespace CiteU.Controllers
                     var reunion = _ReunionRepository.GetReunion(aDay, pole);
                     if (reunion != null)
                     {
+                        var participants = _participationRepository.GetUsersByReunion(reunion.IdReunion);
+                        var canParticipe = !(participants.Where(w => w.IdUser == idUser).Any());
                         listWeekDays.Add(new DayViewModel
                         {
                             Date = aDay,
@@ -64,7 +67,8 @@ namespace CiteU.Controllers
                                 Responsable = _userRepository.GetUser(reunion.IdResponsable),
                                 Lieu = reunion.Lieu,
                                 IdPole = reunion.IdPole,
-                                NbParticipants = 2 //todo : valoriser ceci.
+                                Participants = participants,
+                                CurrentUserCanParticipe = canParticipe
                             }
                         });
                     }

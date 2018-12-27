@@ -1,5 +1,6 @@
 ﻿using DatabaseAccess.User;
 using System;
+using System.Collections.Generic;
 
 namespace CiteU.Models.Planning
 {
@@ -10,7 +11,7 @@ namespace CiteU.Models.Planning
         public UserModel Responsable { get; set; }
         public string Lieu { get; set; }
         public int IdPole { get; set; }
-        public int NbParticipants { get; set; }
-
+        public List<UserModel> Participants{get;set;}
+        public bool CurrentUserCanParticipe { get; set; }
     }
 }
