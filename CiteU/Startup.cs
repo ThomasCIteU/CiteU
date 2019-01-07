@@ -7,6 +7,7 @@ using DatabaseAccess.Assemblee;
 using DatabaseAccess.Droit;
 using DatabaseAccess.Langue;
 using DatabaseAccess.Login;
+using DatabaseAccess.Mail;
 using DatabaseAccess.Participation;
 using DatabaseAccess.Pole;
 using DatabaseAccess.Reunion;
@@ -51,6 +52,7 @@ namespace CiteU
             services.AddTransient<ILoginRepository, LoginRepository>();
             services.AddTransient<IDroitRepository, DroitRepository>();
             services.AddTransient<IParticipationRepository, ParticipationRepository>();
+            services.AddTransient<IMailRepository, MailRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using DatabaseAccess.Droit;
 using CiteU.Models.Helper;
 using System.Security.Claims;
+using DatabaseAccess.Mail;
 
 namespace CiteU.Controllers
 {
@@ -16,11 +17,13 @@ namespace CiteU.Controllers
         public readonly IUserRepository _userRepository;
         public readonly IAssembleeRepository _assembleeRepository;
         public readonly IDroitRepository _droitRepository;
-        public UserController (IUserRepository userRepository, IAssembleeRepository assembleeRepository, IDroitRepository droitRepository)
+        public readonly IMailRepository _mailRepository;
+        public UserController (IUserRepository userRepository, IAssembleeRepository assembleeRepository, IDroitRepository droitRepository, IMailRepository mailRepository)
         {
             _userRepository = userRepository;
             _assembleeRepository = assembleeRepository;
             _droitRepository = droitRepository;
+            _mailRepository = mailRepository;
         }
 
         [HttpGet]
@@ -117,6 +120,14 @@ namespace CiteU.Controllers
         public IActionResult Delete(int IdUser)
         {
             _userRepository.DeleteUser(IdUser);
+
+            return RedirectToAction("Index", "User");
+        }
+
+        [HttpGet]
+        public IActionResult SendMail()
+        {
+            _mailRepository.SendEmailTest();
 
             return RedirectToAction("Index", "User");
         }
