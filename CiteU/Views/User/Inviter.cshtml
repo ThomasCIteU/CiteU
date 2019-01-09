@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Inviter un utilisateur";
+}
+<h1>Inviter un utilisateur</h1>
+
+
+<form asp-controller="User" asp-action="InscrireUser" method="get" class="container">
+    <div class="input-group">
+        <label>Mail</label>
+        <input name="mailUser" class="form-control" />
+    </div>
+    
+    <button type="submit" class="btn btn-success">Envoyer le mail d'inscription</button>
+</form>

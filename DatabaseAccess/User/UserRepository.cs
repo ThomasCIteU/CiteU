@@ -15,7 +15,7 @@ namespace DatabaseAccess.User
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = "SELECT idUser, Nom, Prenom, Sexe, Mail, Phone, Assemblee, Privilege, idDroit FROM user U ";
+                string sql = "SELECT idUser, Nom, Prenom, Sexe, Mail, Phone, Assemblee, Privilege, idDroit, Mdp FROM user U ";
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 MySqlDataReader rdr = cmd.ExecuteReader();
                 var listUsers = new List<UserModel>();
@@ -32,7 +32,8 @@ namespace DatabaseAccess.User
                         Phone = rdr["Phone"].ToString(),
                         IdAssemblee = Convert.ToInt16(rdr["Assemblee"]),
                         Privilege = rdr["Privilege"].ToString(),
-                        Droit = Convert.ToInt16(rdr["idDroit"])
+                        Droit = Convert.ToInt16(rdr["idDroit"]),
+                        Mdp = rdr["Mdp"].ToString()
                         }
                     );
                 }
@@ -51,7 +52,7 @@ namespace DatabaseAccess.User
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = "SELECT U.idUser, U.Nom, U.Prenom, U.Sexe, U.Mail, U.Phone, U.Assemblee, U.Privilege, U.idDroit " +
+                string sql = "SELECT U.idUser, U.Nom, U.Prenom, U.Sexe, U.Mail, U.Phone, U.Assemblee, U.Privilege, U.idDroit, U.Mdp " +
                     "FROM user U " +
                     "LEFT JOIN citeu.assemblee a on a.idassemblee = U.Assemblee " +
                     "WHERE a.IdPole = @idPole";
@@ -72,7 +73,8 @@ namespace DatabaseAccess.User
                             Phone = rdr["Phone"].ToString(),
                             IdAssemblee = Convert.ToInt16(rdr["Assemblee"]),
                             Privilege = rdr["Privilege"].ToString(),
-                            Droit = Convert.ToInt16(rdr["idDroit"])
+                            Droit = Convert.ToInt16(rdr["idDroit"]),
+                            Mdp = rdr["Mdp"].ToString()
                         }
                     );
                 }
@@ -108,7 +110,8 @@ namespace DatabaseAccess.User
                         Phone = rdr["Phone"].ToString(),
                         IdAssemblee = Convert.ToInt16(rdr["Assemblee"]),
                         Privilege = rdr["Privilege"].ToString(),
-                        Droit = Convert.ToInt16(rdr["idDroit"])
+                        Droit = Convert.ToInt16(rdr["idDroit"]),
+                        Mdp = rdr["Mdp"].ToString()
                     };
                 }
                 rdr.Close();
@@ -125,7 +128,7 @@ namespace DatabaseAccess.User
             }
         }
 
-        public void EditUser(int IdUser, string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege, int Droit)
+        public void EditUser(int IdUser, string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege, int Droit, string Mdp)
         {
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
@@ -138,7 +141,8 @@ namespace DatabaseAccess.User
                     $"Phone = @Phone, " +
                     $"Assemblee = @Assemblee, " +
                     $"Privilege = @Privilege, " +
-                    $"idDroit = @Droit " +
+                    $"idDroit = @Droit, " +
+                    $"Mdp = @Mdp " +
                     $"WHERE idUser=@idUser";
 
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
@@ -150,6 +154,7 @@ namespace DatabaseAccess.User
                 cmd.Parameters.AddWithValue("@Assemblee", Assemblee);
                 cmd.Parameters.AddWithValue("@Privilege", Privilege);
                 cmd.Parameters.AddWithValue("@idUser", IdUser);
+                cmd.Parameters.AddWithValue("@Mdp", Mdp);
                 cmd.Parameters.AddWithValue("@Droit", Droit);
 
                 cmd.ExecuteNonQuery();
@@ -183,7 +188,7 @@ namespace DatabaseAccess.User
             }
         }
 
-        public void CreateUser(string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege, int Droit)
+        public void CreateUser(string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege, int Droit, string Mdp)
         {
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
@@ -196,7 +201,8 @@ namespace DatabaseAccess.User
                     $"@Phone, " +
                     $"@Assemblee, " +
                     $"@Privilege, " +
-                    $"@Droit)";
+                    $"@Droit," +
+                    $"@Mdp)";
 
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@Nom", Nom);
@@ -207,6 +213,7 @@ namespace DatabaseAccess.User
                 cmd.Parameters.AddWithValue("@Assemblee", Assemblee);
                 cmd.Parameters.AddWithValue("@Privilege", Privilege);
                 cmd.Parameters.AddWithValue("@Droit", Droit);
+                cmd.Parameters.AddWithValue("@Mdp", Mdp);
 
                 cmd.ExecuteNonQuery();
 

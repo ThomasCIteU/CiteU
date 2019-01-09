@@ -52,6 +52,9 @@
     <Content Update="Views\Pole\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\User\Inviter.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\User\Get.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

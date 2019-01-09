@@ -15,5 +15,6 @@ namespace DatabaseAccess.User
         public int IdAssemblee { get; set; }
         public string Privilege { get; set; }
         public int Droit { get; set; }
+        public string Mdp { get; set; }
     }
 }

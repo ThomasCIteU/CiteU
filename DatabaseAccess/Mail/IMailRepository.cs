@@ -7,5 +7,6 @@ namespace DatabaseAccess.Mail
     public interface IMailRepository
     {
         void SendEmailTest();
+        void SendEmailInscription(string mailUser);
     }
 }

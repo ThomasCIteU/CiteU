@@ -96,11 +96,35 @@ namespace CiteU.Controllers
         }
 
         [Authorize(Policy = ClaimCiteU.Administrateur)]
+        [HttpGet]
+        public IActionResult Inviter()
+        {
+            return View();
+        }
+
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
+        [HttpGet]
+        public IActionResult InscriptionPage(string mailUser)
+        {
+            var vm = new UserEditViewModel()
+            {
+                AllAssemblees = _assembleeRepository.GetAssemblees(),
+                AllDroits = _droitRepository.getAllDroits(),
+                CurrentUser = new UserModel()
+                {
+                    Mail = mailUser
+                },
+                IsCreation = true
+            };
+            return View("edit", vm);
+        }
+
+        [Authorize(Policy = ClaimCiteU.Administrateur)]
         [HttpPost]
         public IActionResult Create(UserEditViewModel User)
         {
             var user = User.CurrentUser;
-            _userRepository.CreateUser(user.Nom, user.Prenom, user.Sexe, user.Mail, user.Phone, user.IdAssemblee, user.Privilege, user.Droit);
+            _userRepository.CreateUser(user.Nom, user.Prenom, user.Sexe, user.Mail, user.Phone, user.IdAssemblee, user.Privilege, user.Droit, user.Mdp);
 
             return RedirectToAction("Index", "User");
         }
@@ -110,7 +134,7 @@ namespace CiteU.Controllers
         public IActionResult Edit(UserEditViewModel user)
         {
             var usr = user.CurrentUser;
-            _userRepository.EditUser(usr.IdUser, usr.Nom, usr.Prenom, usr.Sexe, usr.Mail, usr.Phone, usr.IdAssemblee, usr.Privilege, usr.Droit);
+            _userRepository.EditUser(usr.IdUser, usr.Nom, usr.Prenom, usr.Sexe, usr.Mail, usr.Phone, usr.IdAssemblee, usr.Privilege, usr.Droit, usr.Mdp);
 
             return RedirectToAction("Index", "User", usr.IdUser);
         }
@@ -120,6 +144,14 @@ namespace CiteU.Controllers
         public IActionResult Delete(int IdUser)
         {
             _userRepository.DeleteUser(IdUser);
+
+            return RedirectToAction("Index", "User");
+        }
+
+        [HttpGet]
+        public IActionResult InscrireUser(string mailUser)
+        {
+            _mailRepository.SendEmailInscription(mailUser);
 
             return RedirectToAction("Index", "User");
         }

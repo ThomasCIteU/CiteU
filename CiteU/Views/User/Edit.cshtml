@@ -20,11 +20,29 @@
     </div>
     <div class="input-group">
         <label asp-for="CurrentUser.Mail">Mail</label>
-        <input asp-for="CurrentUser.Mail" class="form-control" type="email"/>
+        @if (Model.CurrentUser == null)
+        {
+            <input asp-for="CurrentUser.Mail" class="form-control" type="email" />
+        }
+        else
+        {
+            <input asp-for="CurrentUser.Mail" class="form-control" type="email" readonly />
+        }
+    </div>
+    <div class="input-group">
+        <label asp-for="CurrentUser.Mail">Mot de passe</label>
+        @if (Model.CurrentUser == null || Model.CurrentUser.Mdp == null)
+        {
+            <input asp-for="CurrentUser.Mdp" class="form-control" type="text" />
+        }
+        else
+        {
+            <input asp-for="CurrentUser.Mdp" class="form-control" type="password" readonly/>
+        }
     </div>
     <div class="input-group">
         <label asp-for="CurrentUser.Phone">Phone</label>
-        <input asp-for="CurrentUser.Phone" class="form-control"/>
+        <input asp-for="CurrentUser.Phone" class="form-control" />
     </div>
     <div class="input-group">
         <label asp-for="CurrentUser.Privilege">Privilege</label>
