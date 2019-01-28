@@ -25,7 +25,12 @@ namespace CiteU.Controllers
             _droitRepository = droitRepository;
             _mailRepository = mailRepository;
         }
-
+        public void SetViewData()
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            string role = ClaimCiteU.getDroitFromClaim(identity.Claims);
+            ViewData["CanEdit"] = (role == ClaimCiteU.Administrateur);
+        }
         [HttpGet]
         public IActionResult Index()
         {
@@ -35,6 +40,7 @@ namespace CiteU.Controllers
             string role = ClaimCiteU.getDroitFromClaim(identity.Claims);
 
             ViewData["CanEdit"] = (role == ClaimCiteU.Administrateur);
+
             var listUsers = new List<UserViewModel>();
             var list = new List<UserModel>();
             if (role == ClaimCiteU.Administrateur)
@@ -72,6 +78,7 @@ namespace CiteU.Controllers
         [HttpGet]
         public IActionResult EditPage(int IdUser)
         {
+            SetViewData();
             var vm = new UserEditViewModel()
             {
                 CurrentUser = _userRepository.GetUser(IdUser),
@@ -86,6 +93,7 @@ namespace CiteU.Controllers
         [HttpGet]
         public IActionResult CreatePage()
         {
+            SetViewData();
             var vm = new UserEditViewModel()
             {
                 AllAssemblees = _assembleeRepository.GetAssemblees(),
@@ -106,6 +114,7 @@ namespace CiteU.Controllers
         [HttpGet]
         public IActionResult InscriptionPage(string mailUser)
         {
+            SetViewData();
             var vm = new UserEditViewModel()
             {
                 AllAssemblees = _assembleeRepository.GetAssemblees(),
@@ -114,7 +123,7 @@ namespace CiteU.Controllers
                 {
                     Mail = mailUser
                 },
-                IsCreation = true
+                IsCreation = false
             };
             return View("edit", vm);
         }
@@ -152,6 +161,7 @@ namespace CiteU.Controllers
         public IActionResult InscrireUser(string mailUser)
         {
             _mailRepository.SendEmailInscription(mailUser);
+            _userRepository.CreateUser("", "", 'M', mailUser, "", 0, "", 0, "");
 
             return RedirectToAction("Index", "User");
         }

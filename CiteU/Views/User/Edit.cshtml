@@ -37,7 +37,7 @@
         }
         else
         {
-            <input asp-for="CurrentUser.Mdp" class="form-control" type="password" readonly/>
+            <input asp-for="CurrentUser.Mdp" class="form-control" type="password" readonly />
         }
     </div>
     <div class="input-group">
@@ -64,6 +64,8 @@
             }
         </select>
     </div>
+    @if ((bool)ViewData["CanEdit"])
+    {
     <div class="input-group">
         <label asp-for="CurrentUser.Droit">Droit</label>
         <select asp-for="CurrentUser.Droit" class="form-control">
@@ -73,6 +75,12 @@
             }
         </select>
     </div>
+    }
+    else
+    {
+    <input asp-for="CurrentUser.Droit" type="hidden" />
+    }
+
 
     <button type="submit" class="btn btn-success">Valider</button>
 </form>
