@@ -2,7 +2,7 @@
     ViewData["Title"] = "La page des utilisateurs";
 }
 @model CiteU.Models.User.UserEditViewModel
-<h1>@(Model.IsCreation ? "Création d'une assemblée" : Model.CurrentUser.Nom + " " + Model.CurrentUser.Prenom)</h1>
+<h1>@(Model.IsCreation ? "Création d'un utilisateur" : Model.CurrentUser.Nom + " " + Model.CurrentUser.Prenom)</h1>
 
 
 <form asp-controller="User" asp-action="@(Model.IsCreation ? "Create" : "Edit")" method="post" class="container">

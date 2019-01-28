@@ -102,7 +102,7 @@ namespace CiteU.Controllers
             return View();
         }
 
-        [Authorize(Policy = ClaimCiteU.Administrateur)]
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult InscriptionPage(string mailUser)
         {
@@ -119,7 +119,7 @@ namespace CiteU.Controllers
             return View("edit", vm);
         }
 
-        [Authorize(Policy = ClaimCiteU.Administrateur)]
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult Create(UserEditViewModel User)
         {

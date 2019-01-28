@@ -30,20 +30,22 @@ namespace CiteU.Controllers
             _participationRepository = participationRepository;
         }
 
-        public IActionResult Index(int year = 2018, int month = 12)
+        public IActionResult Index(int? year = null, int? month = null)
         {
-            var identity = (ClaimsIdentity)User.Identity;
+            int nowYear = year ?? DateTime.Now.Year;
+            int nowMonth = month ?? DateTime.Now.Month;
 
+            var identity = (ClaimsIdentity)User.Identity;
             int pole = ClaimCiteU.getPoleFromClaim(identity.Claims);
             string role = ClaimCiteU.getDroitFromClaim(identity.Claims);
             int idUser = ClaimCiteU.getIdUserFromClaim(identity.Claims);
             ViewData["CanEdit"] = (role != ClaimCiteU.Proclamateur);
             var listMonthDays = new List<List<DayViewModel>>();
-            int days = DateTime.DaysInMonth(year, month);
+            int days = DateTime.DaysInMonth(nowYear, nowMonth);
             var listWeekDays = new List<DayViewModel>();
             for (int day = 1; day <= days; day++)
             {
-                var aDay = new DateTime(year, month, day);
+                var aDay = new DateTime(nowYear, nowMonth, day);
                 
                 if(aDay.DayOfWeek == DayOfWeek.Monday || aDay.DayOfWeek == DayOfWeek.Tuesday || aDay.DayOfWeek == DayOfWeek.Wednesday)
                 {
@@ -85,7 +87,7 @@ namespace CiteU.Controllers
             var vm = new PlanningViewModel
             {
                 Weeks = listMonthDays,
-                Actual = new DateTime(year, month, 1)
+                Actual = new DateTime(nowYear, nowMonth, 1)
             };
             return View(vm);
         }
@@ -96,8 +98,9 @@ namespace CiteU.Controllers
         {
             var identity = (ClaimsIdentity)User.Identity;
             int idUser = ClaimCiteU.getIdUserFromClaim(identity.Claims);
+            var reunion = _ReunionRepository.GetReunion(IdReunion);
             _participationRepository.CreateParticipation(IdReunion, idUser);
-            return RedirectToAction("Index", "Planning");
+            return RedirectToAction("Index", "Planning", new { year = reunion.Date.Year, month = reunion.Date.Month });
         }
     }
 }

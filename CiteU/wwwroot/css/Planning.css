@@ -11,7 +11,8 @@
       width: 100%;
       border-bottom: solid 1px #1d3661;
       display: block;
-      background-color: aquamarine;
+      background-color: #002d5c;
+      color: white;
       padding: 5px; }
     .planning .month .week .day article {
       padding: 5px; }

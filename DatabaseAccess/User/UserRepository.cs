@@ -193,7 +193,7 @@ namespace DatabaseAccess.User
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = $"INSERT INTO user (Nom, Prenom, Sexe, Mail, Phone, Assemblee, Privilege, idDroit) VALUES( " +
+                string sql = $"INSERT INTO user (Nom, Prenom, Sexe, Mail, Phone, Assemblee, Privilege, idDroit, Mdp) VALUES( " +
                     $"@Nom, " +
                     $"@Prenom, " +
                     $"@Sexe, " +
