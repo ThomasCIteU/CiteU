@@ -15,7 +15,7 @@ namespace DatabaseAccess.User
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = "SELECT idUser, Nom, Prenom, Sexe, Mail, Phone, Assemblee, Privilege, idDroit, Mdp FROM user U ";
+                string sql = "SELECT idUser, Nom, Prenom, Sexe, Mail, Phone, Assemblee, Privilege, idDroit, Mdp FROM user U Where idUser <> 0 ";
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 MySqlDataReader rdr = cmd.ExecuteReader();
                 var listUsers = new List<UserModel>();

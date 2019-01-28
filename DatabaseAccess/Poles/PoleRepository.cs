@@ -15,7 +15,7 @@ namespace DatabaseAccess.Pole
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = "SELECT * FROM pole";
+                string sql = "SELECT * FROM pole Where idPole <> 0 ";
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 MySqlDataReader rdrPole = cmd.ExecuteReader();
 

@@ -15,7 +15,7 @@ namespace DatabaseAccess.Assemblee
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = "SELECT * FROM assemblee";
+                string sql = "SELECT * FROM assemblee Where idassemblee <> 0 ";
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 MySqlDataReader rdr = cmd.ExecuteReader();
                 var listAssembblee = new List<AssembleeModel>();
