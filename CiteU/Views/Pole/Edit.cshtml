@@ -12,7 +12,8 @@
     }
     <div class="input-group">
         <label asp-for="CurrentPole.Libelle">Nom</label>
-        <input asp-for="CurrentPole.Libelle" class="form-control" />
+        <input asp-for="CurrentPole.Libelle" class="form-control" /><br/>
+        <span asp-validation-for="CurrentPole.Libelle" class="text-danger"></span>
     </div>
     <div class="input-group">
         <label asp-for="CurrentPole.IdResponsable">Responsable</label>

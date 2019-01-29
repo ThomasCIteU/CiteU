@@ -128,6 +128,46 @@ namespace DatabaseAccess.User
             }
         }
 
+        public UserModel GetUser(string mailUser)
+        {
+            MySqlConnection cnn = BDDRepository.OpenConnexion();
+            try
+            {
+                string sql = "SELECT * FROM user WHERE Mail=@mailUser";
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@mailUser", mailUser);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                UserModel user = null;
+                if (rdr.Read())
+                {
+                    user = new UserModel()
+                    {
+                        IdUser = Convert.ToInt16(rdr["idUser"]),
+                        Nom = rdr["Nom"].ToString(),
+                        Prenom = rdr["Prenom"].ToString(),
+                        Sexe = Convert.ToChar(rdr["Sexe"]),
+                        Mail = rdr["Mail"].ToString(),
+                        Phone = rdr["Phone"].ToString(),
+                        IdAssemblee = Convert.ToInt16(rdr["Assemblee"]),
+                        Privilege = rdr["Privilege"].ToString(),
+                        Droit = Convert.ToInt16(rdr["idDroit"]),
+                        Mdp = rdr["Mdp"].ToString()
+                    };
+                }
+                rdr.Close();
+                cnn.Close();
+                if (user == null)
+                {
+                    throw new Exception("Cet utilisateur n'existe pas");
+                }
+                return user;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public void EditUser(int IdUser, string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege, int Droit, string Mdp)
         {
             MySqlConnection cnn = BDDRepository.OpenConnexion();

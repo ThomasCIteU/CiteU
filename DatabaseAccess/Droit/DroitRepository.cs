@@ -45,7 +45,7 @@ namespace DatabaseAccess.Droit
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = "SELECT * FROM droit";
+                string sql = "SELECT * FROM droit where idDroit <> 0 ";
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 MySqlDataReader rdrDroit = cmd.ExecuteReader();
 

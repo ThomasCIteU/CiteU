@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CiteU.Controllers
 {
+    [Authorize]
     public class PlanningController : Controller
     {
         public readonly IReunionRepository _ReunionRepository;

@@ -107,28 +107,30 @@ namespace CiteU.Controllers
         [HttpGet]
         public IActionResult Inviter()
         {
-            return View();
+            var vm = new InvitationViewModel()
+            {
+                AllDroits = _droitRepository.getAllDroits()
+            };
+            return View(vm);
         }
 
         [AllowAnonymous]
         [HttpGet]
         public IActionResult InscriptionPage(string mailUser)
         {
-            SetViewData();
+            ViewData["CanEdit"] = false;
+            var user = _userRepository.GetUser(mailUser);
+
             var vm = new UserEditViewModel()
             {
+                CurrentUser = _userRepository.GetUser(mailUser),
                 AllAssemblees = _assembleeRepository.GetAssemblees(),
                 AllDroits = _droitRepository.getAllDroits(),
-                CurrentUser = new UserModel()
-                {
-                    Mail = mailUser
-                },
                 IsCreation = false
             };
             return View("edit", vm);
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public IActionResult Create(UserEditViewModel User)
         {
@@ -139,6 +141,7 @@ namespace CiteU.Controllers
         }
 
         [Authorize(Policy = ClaimCiteU.Proclamateur)]
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult Edit(UserEditViewModel user)
         {
@@ -158,10 +161,10 @@ namespace CiteU.Controllers
         }
 
         [HttpGet]
-        public IActionResult InscrireUser(string mailUser)
+        public IActionResult InscrireUser(InvitationViewModel user)
         {
-            _mailRepository.SendEmailInscription(mailUser);
-            _userRepository.CreateUser("", "", 'M', mailUser, "", 0, "", 0, "");
+            _userRepository.CreateUser("", "", 'M', user.MailUser, "", 0, "", user.DroitUser, "");
+            _mailRepository.SendEmailInscription(user.MailUser);
 
             return RedirectToAction("Index", "User");
         }

@@ -10,13 +10,15 @@
     {
         <input type="hidden" asp-for="CurrentUser.IdUser" />
     }
-    <div class="input-group">
-        <label asp-for="CurrentUser.Nom">Nom</label>
-        <input asp-for="CurrentUser.Nom" class="form-control" />
-    </div>
+        <div class="input-group">
+            <label asp-for="CurrentUser.Nom">Nom</label>
+            <input asp-for="CurrentUser.Nom" class="form-control" />
+            <br /><span asp-validation-for="CurrentUser.Nom" class="text-danger"></span>
+        </div>
     <div class="input-group">
         <label asp-for="CurrentUser.Prenom">Prenom</label>
         <input asp-for="CurrentUser.Prenom" class="form-control" />
+        <br /><span asp-validation-for="CurrentUser.Prenom" class="text-danger"></span>
     </div>
     <div class="input-group">
         <label asp-for="CurrentUser.Mail">Mail</label>
@@ -28,10 +30,12 @@
         {
             <input asp-for="CurrentUser.Mail" class="form-control" type="email" readonly />
         }
+        <br />
+        <span asp-validation-for="CurrentUser.Mail" class="text-danger"></span>
     </div>
     <div class="input-group">
         <label asp-for="CurrentUser.Mail">Mot de passe</label>
-        @if (Model.CurrentUser == null || Model.CurrentUser.Mdp == null)
+        @if (Model.CurrentUser == null || string.IsNullOrEmpty(Model.CurrentUser.Mdp))
         {
             <input asp-for="CurrentUser.Mdp" class="form-control" type="text" />
         }
@@ -39,10 +43,13 @@
         {
             <input asp-for="CurrentUser.Mdp" class="form-control" type="password" readonly />
         }
+        <br/><span asp-validation-for="CurrentUser.Mdp" class="text-danger"></span>
+
     </div>
     <div class="input-group">
         <label asp-for="CurrentUser.Phone">Phone</label>
         <input asp-for="CurrentUser.Phone" class="form-control" />
+        <br /><span asp-validation-for="CurrentUser.Phone" class="text-danger"></span>
     </div>
     <div class="input-group">
         <label asp-for="CurrentUser.Privilege">Privilege</label>
@@ -84,7 +91,7 @@
 
     <button type="submit" class="btn btn-success">Valider</button>
 </form>
-@if (!Model.IsCreation)
+@if (!Model.IsCreation && (bool)ViewData["CanEdit"])
 {
     <form asp-controller="User" asp-action="Delete" method="post">
         <input type="hidden" name="@nameof(Model.CurrentUser.IdUser)" value="@Model.CurrentUser.IdUser" />

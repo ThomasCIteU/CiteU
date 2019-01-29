@@ -12,7 +12,8 @@
     }
     <div class="input-group">
         <label asp-for="CurrentLangue.Nom">Nom</label>
-        <input asp-for="CurrentLangue.Nom" class="form-control" />
+        <input asp-for="CurrentLangue.Nom" class="form-control" /><br/>
+        <span asp-validation-for="CurrentLangue.Nom" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-success">Valider</button>
