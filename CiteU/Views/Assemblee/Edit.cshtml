@@ -16,7 +16,7 @@
         <span asp-validation-for="CurrentAssemblee.Nom" class="text-danger"></span>
     </div>
     <div class="input-group">
-        <label asp-for="CurrentAssemblee.IdPole">Responsable</label>
+        <label asp-for="CurrentAssemblee.IdPole">Pôle</label>
         <select asp-for="CurrentAssemblee.IdPole" class="form-control">
             @foreach (var pole in Model.AllPoles)
             {
