@@ -53,7 +53,11 @@
     </div>
     <div class="input-group">
         <label asp-for="CurrentUser.Privilege">Privilege</label>
-        <input asp-for="CurrentUser.Privilege" class="form-control" />
+        <select asp-for="CurrentUser.Privilege" class="form-control">
+            <option value="Ancien">Ancien</option>
+            <option value="Assistant">Ancien</option>
+            <option value="Proclamateur">Proclamateur</option>
+        </select>
     </div>
     <div class="input-group">
         <label asp-for="CurrentUser.Sexe">Sexe</label>

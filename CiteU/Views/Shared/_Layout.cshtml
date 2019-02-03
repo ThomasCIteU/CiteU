@@ -5,10 +5,14 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - CiteU</title>
+    <title>@ViewData["Title"]</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.min.css" />
@@ -30,21 +34,21 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">CiteU</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Accueil</a>
             </div>
             <div class="navbar-collapse collapse">
                 @if (Context.User.Claims.Any())
                 {
                     <ul class="nav navbar-nav">
                         <li><a href="/Planning/Index?year=@DateTime.Now.Year&month=@DateTime.Now.Month">Planning</a></li>
+                        <li><a asp-area="" asp-controller="User" asp-action="Index">Participants</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a asp-area="" asp-controller="User" asp-action="Index">Les utilisateurs</a></li>
-                                <li><a asp-area="" asp-controller="Pole" asp-action="Index">Les pôles</a></li>
-                                <li><a asp-area="" asp-controller="Langue" asp-action="Index">Les langues</a></li>
-                                <li><a asp-area="" asp-controller="Assemblee" asp-action="Index">Les assemblées</a></li>
-                                <li><a asp-area="" asp-controller="Reunion" asp-action="Index">Les réunions</a></li>
+                                <li><a asp-area="" asp-controller="Pole" asp-action="Index">Pôles</a></li>
+                                <li><a asp-area="" asp-controller="Langue" asp-action="Index">Langues parlées</a></li>
+                                <li><a asp-area="" asp-controller="Assemblee" asp-action="Index">Assemblées</a></li>
+                                <li><a asp-area="" asp-controller="Reunion" asp-action="Index">Réunions pour la prédication</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -64,22 +68,15 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - CiteU</p>
+            <p>&copy; 2018 </p>
         </footer>
     </div>
 
     <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-        </script>
         <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
