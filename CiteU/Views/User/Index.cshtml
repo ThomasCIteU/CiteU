@@ -4,6 +4,12 @@
 @model CiteU.Models.User.UsersViewModel
 <h1>Les utilisateurs</h1>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#userTable').DataTable();
+    });
+</script>
+
 @if ((bool)ViewData["CanEdit"])
 {
     <form asp-controller="User" asp-action="CreatePage" method="get">
