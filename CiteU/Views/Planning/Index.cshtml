@@ -105,7 +105,7 @@
                                 <p>Pas de réunion.</p>
                                 @if ((bool)ViewData["CanEdit"])
                                 {
-                                    <form asp-controller="Reunion" asp-action="CreatePageFromDate" method="get">
+                                    <form asp-controller="Reunion" asp-action="CreatePage" method="get">
                                         <input type="hidden" name="Date" value="@day.Date.ToString("yyyy-MM-dd")" />
                                         <button type="submit" class="btn btn-default">Ajouter une réunion</button>
                                     </form>

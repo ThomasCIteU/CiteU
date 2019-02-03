@@ -97,31 +97,35 @@ namespace CiteU.Controllers
 
         [Authorize(Policy = ClaimCiteU.Responsable)]
         [HttpGet]
-        public IActionResult CreatePage()
+        public IActionResult CreatePage(DateTime? Date = null)
         {
-            var vm = new ReunionEditViewModel()
+            if(Date == null)
             {
-                AllUsers = _userRepository.GetUsers(),
-                AllPoles = _poleRepository.GetPoles(),
-                IsCreation = true
-            };
-            return View("edit", vm);
-        }
+                Date = DateTime.Now;
+            }
+            
+            var identity = (ClaimsIdentity)User.Identity;
 
-        [Authorize(Policy = ClaimCiteU.Responsable)]
-        [HttpGet]
-        public IActionResult CreatePageFromDate(DateTime Date)
-        {
-            var vm = new ReunionEditViewModel()
+            int pole = ClaimCiteU.getPoleFromClaim(identity.Claims);
+            string role = ClaimCiteU.getDroitFromClaim(identity.Claims);
+            ViewData["CanEdit"] = (role != ClaimCiteU.Proclamateur);
+            ViewData["IsAdmin"] = (role == ClaimCiteU.Administrateur);
+
+            var listDesReunions = new List<ReunionViewModel>();
+            var list = new List<ReunionModel>();
+
+            var vm = new ReunionEditViewModel();
+            vm.AllUsers = _userRepository.GetUsers();
+            vm.IsCreation = true;
+            vm.CurrentReunion = new ReunionModel()
             {
-                CurrentReunion = new ReunionModel
-                {
-                    Date = Date
-                },
-                AllUsers = _userRepository.GetUsers(),
-                AllPoles = _poleRepository.GetPoles(),
-                IsCreation = true
+                IdPole = pole,
+                Date = Date.Value
             };
+            if ((bool)ViewData["IsAdmin"])
+            {
+                vm.AllPoles = _poleRepository.GetPoles();
+            }
             return View("edit", vm);
         }
 
