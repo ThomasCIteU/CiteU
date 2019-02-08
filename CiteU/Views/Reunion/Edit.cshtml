@@ -10,7 +10,6 @@
     {
         <input type="hidden" asp-for="CurrentReunion.IdReunion" />
     }
-    <input asp-for="CurrentReunion.IdCreateur" class="form-control" type="hidden" value="2" />
     <div class="input-group">
         <label asp-for="CurrentReunion.Date">Date</label>
         <input asp-for="CurrentReunion.Date" class="form-control" type="date" value="@Model.CurrentReunion.Date.ToString("yyyy-MM-dd")" />

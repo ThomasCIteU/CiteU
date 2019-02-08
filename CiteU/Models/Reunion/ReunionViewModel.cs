@@ -16,7 +16,6 @@ namespace CiteU.Models.Reunion
         public DateTime Date { get; set; }
         public DateTime Heure { get; set; }
         public string Responsable { get; set; }
-        public string Createur { get; set; }
         public string Pole { get; set; }
         public string Lieu { get; set; }
     }

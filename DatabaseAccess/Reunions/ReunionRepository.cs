@@ -29,7 +29,6 @@ namespace DatabaseAccess.Reunion
                             IdReunion = Convert.ToInt16(rdr["idreunion"]),
                             Date = Convert.ToDateTime(rdr["Date"]),
                             IdResponsable= Convert.ToInt16(rdr["IdResponsable"]),
-                            IdCreateur = Convert.ToInt16(rdr["IdCreateur"]),
                             Lieu = rdr["Lieu"].ToString(),
                             IdPole = Convert.ToInt16(rdr["IdPole"])
                         }
@@ -64,7 +63,6 @@ namespace DatabaseAccess.Reunion
                             IdReunion = Convert.ToInt16(rdr["idreunion"]),
                             Date = Convert.ToDateTime(rdr["Date"]),
                             IdResponsable = Convert.ToInt16(rdr["IdResponsable"]),
-                            IdCreateur = Convert.ToInt16(rdr["IdCreateur"]),
                             Lieu = rdr["Lieu"].ToString(),
                             IdPole = Convert.ToInt16(rdr["IdPole"])
                         }
@@ -80,22 +78,20 @@ namespace DatabaseAccess.Reunion
             }
         }
 
-        public void CreateReunion(DateTime date, int idResponsable, int idCreateur, string lieu, int idPole)
+        public void CreateReunion(DateTime date, int idResponsable, string lieu, int idPole)
         {
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
-                string sql = $"INSERT INTO reunion (Date, IdResponsable, IdCreateur, Lieu, IdPole) VALUES( " +
+                string sql = $"INSERT INTO reunion (Date, IdResponsable, Lieu, IdPole) VALUES( " +
                     $"@Date, " +
                     $"@IdResponsable, " +
-                    $"@IdCreateur," +
                     $"@Lieu, " +
                     $"@IdPole)";
 
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@Date", date);
                 cmd.Parameters.AddWithValue("@IdResponsable", idResponsable);
-                cmd.Parameters.AddWithValue("@IdCreateur", idCreateur);
                 cmd.Parameters.AddWithValue("@Lieu", lieu);
                 cmd.Parameters.AddWithValue("@IdPole", idPole);
 
@@ -108,7 +104,7 @@ namespace DatabaseAccess.Reunion
             }
         }
 
-        public void EditReunion(int idReunion, DateTime date, int idResponsable, int idCreateur, string lieu, int idPole)
+        public void EditReunion(int idReunion, DateTime date, int idResponsable, string lieu, int idPole)
         {
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
@@ -116,7 +112,6 @@ namespace DatabaseAccess.Reunion
                 string sql = $"UPDATE Reunion SET " +
                     $"Date = @Date, " +
                     $"IdResponsable = @IdResponsable, " +
-                    $"IdCreateur = @IdCreateur," +
                     $"Lieu = @Lieu, " +
                     $"IdPole = @IdPole " +
                     $"WHERE idreunion=@idReunion";
@@ -124,7 +119,6 @@ namespace DatabaseAccess.Reunion
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@Date", date);
                 cmd.Parameters.AddWithValue("@IdResponsable", idResponsable);
-                cmd.Parameters.AddWithValue("@IdCreateur", idCreateur);
                 cmd.Parameters.AddWithValue("@Lieu", lieu);
                 cmd.Parameters.AddWithValue("@IdPole", idPole);
                 cmd.Parameters.AddWithValue("@idReunion", idReunion);
@@ -176,7 +170,6 @@ namespace DatabaseAccess.Reunion
                         IdReunion = Convert.ToInt16(rdr["idreunion"]),
                         Date = Convert.ToDateTime(rdr["Date"]),
                         IdResponsable = Convert.ToInt16(rdr["IdResponsable"]),
-                        IdCreateur = Convert.ToInt16(rdr["IdCreateur"]),
                         Lieu = rdr["Lieu"].ToString(),
                         IdPole = Convert.ToInt16(rdr["IdPole"])
                     };
@@ -213,7 +206,6 @@ namespace DatabaseAccess.Reunion
                         IdReunion = Convert.ToInt16(rdr["idreunion"]),
                         Date = Convert.ToDateTime(rdr["Date"]),
                         IdResponsable = Convert.ToInt16(rdr["IdResponsable"]),
-                        IdCreateur = Convert.ToInt16(rdr["IdCreateur"]),
                         Lieu = rdr["Lieu"].ToString(),
                         IdPole = Convert.ToInt16(rdr["IdPole"])
                     };
@@ -250,7 +242,6 @@ namespace DatabaseAccess.Reunion
                         IdReunion = Convert.ToInt16(rdr["idreunion"]),
                         Date = Convert.ToDateTime(rdr["Date"]),
                         IdResponsable = Convert.ToInt16(rdr["IdResponsable"]),
-                        IdCreateur = Convert.ToInt16(rdr["IdCreateur"]),
                         Lieu = rdr["Lieu"].ToString(),
                         IdPole = Convert.ToInt16(rdr["IdPole"])
                     };

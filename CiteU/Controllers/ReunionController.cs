@@ -51,13 +51,11 @@ namespace CiteU.Controllers
             foreach (var Reunion in list)
             {
                 var responsable = _userRepository.GetUser(Reunion.IdResponsable);
-                var createur = _userRepository.GetUser(Reunion.IdCreateur);
                 listDesReunions.Add(new ReunionViewModel()
                 {
                     IdReunion = Reunion.IdReunion,
                     Date = Reunion.Date,
                     Responsable = responsable.Nom + " " + responsable.Prenom,
-                    Createur = createur.Nom + " " + createur.Prenom,
                     Lieu = Reunion.Lieu,
                     Pole = _poleRepository.GetPole(Reunion.IdPole).Libelle
                 });
@@ -73,13 +71,24 @@ namespace CiteU.Controllers
         [HttpGet]
         public IActionResult EditPage(int IdReunion)
         {
+            var identity = (ClaimsIdentity)User.Identity;
+            int pole = ClaimCiteU.getPoleFromClaim(identity.Claims);
+            string role = ClaimCiteU.getDroitFromClaim(identity.Claims);
+            ViewData["IsAdmin"] = (role == ClaimCiteU.Administrateur);
             var vm = new ReunionEditViewModel()
             {
                 CurrentReunion = _ReunionRepository.GetReunion(IdReunion),
-                AllPoles = _poleRepository.GetPoles(),
-                AllUsers = _userRepository.GetUsers(),
                 IsCreation = false
             };
+            if ((bool)ViewData["IsAdmin"])
+            {
+                vm.AllPoles = _poleRepository.GetPoles();
+                vm.AllUsers = _userRepository.GetUsers();
+            }
+            else
+            {
+                vm.AllUsers = _userRepository.GetUsersByPole(pole);
+            }
             return View("edit", vm);
         }
 
@@ -90,7 +99,7 @@ namespace CiteU.Controllers
             var Reunion = reunion.CurrentReunion;
             var date = reunion.CurrentReunion.Date.AddHours(reunion.CurrentReunion.Heure.Hour);
             date = date.AddMinutes(reunion.CurrentReunion.Heure.Minute);
-            _ReunionRepository.EditReunion(Reunion.IdReunion, date, Reunion.IdResponsable, Reunion.IdCreateur, Reunion.Lieu, Reunion.IdPole);
+            _ReunionRepository.EditReunion(Reunion.IdReunion, date, Reunion.IdResponsable, Reunion.Lieu, Reunion.IdPole);
 
             return RedirectToAction("Index", "Reunion", Reunion.IdReunion);
         }
@@ -115,7 +124,7 @@ namespace CiteU.Controllers
             var list = new List<ReunionModel>();
 
             var vm = new ReunionEditViewModel();
-            vm.AllUsers = _userRepository.GetUsers();
+            ;
             vm.IsCreation = true;
             vm.CurrentReunion = new ReunionModel()
             {
@@ -125,6 +134,11 @@ namespace CiteU.Controllers
             if ((bool)ViewData["IsAdmin"])
             {
                 vm.AllPoles = _poleRepository.GetPoles();
+                vm.AllUsers = _userRepository.GetUsers();
+            }
+            else
+            {
+                vm.AllUsers = _userRepository.GetUsersByPole(pole);
             }
             return View("edit", vm);
         }
@@ -136,7 +150,7 @@ namespace CiteU.Controllers
             var Reunion = reunion.CurrentReunion;
             var date = reunion.CurrentReunion.Date.AddHours(reunion.CurrentReunion.Heure.Hour);
             date = date.AddMinutes(reunion.CurrentReunion.Heure.Minute);
-            _ReunionRepository.CreateReunion(date, Reunion.IdResponsable, Reunion.IdCreateur, Reunion.Lieu, Reunion.IdPole);
+            _ReunionRepository.CreateReunion(date, Reunion.IdResponsable, Reunion.Lieu, Reunion.IdPole);
 
             return RedirectToAction("Index", "Reunion", Reunion.IdReunion);
         }

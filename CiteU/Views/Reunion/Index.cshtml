@@ -23,7 +23,6 @@
             <th>Heure</th>
             <th>Lieu</th>
             <th>Responsable</th>
-            <th>Createur de la réunion</th>
             <th>Pôle</th>
             @if ((bool)ViewData["CanEdit"])
             {
@@ -40,7 +39,6 @@
                 <td>@Reunion.Date.ToShortTimeString()</td>
                 <td>@Reunion.Lieu</td>
                 <td>@Reunion.Responsable</td>
-                <td>@Reunion.Createur</td>
                 <td>@Reunion.Pole</td>
                 @if ((bool)ViewData["CanEdit"])
                 {
