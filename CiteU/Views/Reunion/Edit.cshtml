@@ -24,7 +24,7 @@
     </div>
     <div class="input-group">
         <label asp-for="CurrentReunion.IdResponsable">Responsable</label>
-        <select asp-for="CurrentReunion.IdResponsable" class="form-control">
+        <select asp-for="CurrentReunion.IdResponsable" class="form-control select2">
             @foreach (var user in Model.AllUsers)
             {
                 <option value="@user.IdUser">@user.Nom @user.Prenom</option>
@@ -36,7 +36,7 @@
     {
         <div class="input-group">
             <label asp-for="CurrentReunion.IdPole">Pôle</label>
-            <select asp-for="CurrentReunion.IdPole" class="form-control">
+            <select asp-for="CurrentReunion.IdPole" class="form-control select2">
                 @foreach (var pole in Model.AllPoles)
                 {
                     <option value="@pole.IdPole">@pole.Libelle</option>

@@ -53,7 +53,7 @@
     </div>
     <div class="input-group">
         <label asp-for="CurrentUser.Privilege">Privilege</label>
-        <select asp-for="CurrentUser.Privilege" class="form-control">
+        <select asp-for="CurrentUser.Privilege" class="form-control select2">
             <option value="Ancien">Ancien</option>
             <option value="Assistant">Ancien</option>
             <option value="Proclamateur">Proclamateur</option>
@@ -61,14 +61,14 @@
     </div>
     <div class="input-group">
         <label asp-for="CurrentUser.Sexe">Sexe</label>
-        <select asp-for="CurrentUser.Sexe" class="form-control">
+        <select asp-for="CurrentUser.Sexe" class="form-control select2">
             <option value="M">Homme</option>
             <option value="F">Femme</option>
         </select>
     </div>
     <div class="input-group">
         <label asp-for="CurrentUser.IdAssemblee">Assemblée</label>
-        <select asp-for="CurrentUser.IdAssemblee" class="form-control">
+        <select asp-for="CurrentUser.IdAssemblee" class="form-control select2">
             @foreach (var assemblee in Model.AllAssemblees)
             {
                 <option value="@assemblee.IdAssemblee">@assemblee.Nom</option>
@@ -79,7 +79,7 @@
     {
     <div class="input-group">
         <label asp-for="CurrentUser.Droit">Droit</label>
-        <select asp-for="CurrentUser.Droit" class="form-control">
+        <select asp-for="CurrentUser.Droit" class="form-control select2">
             @foreach (var droit in Model.AllDroits)
             {
                 <option value="@droit.IdDroit">@droit.Libelle</option>

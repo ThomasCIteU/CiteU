@@ -17,7 +17,7 @@
     </div>
     <div class="input-group">
         <label asp-for="CurrentPole.IdResponsable">Responsable</label>
-        <select asp-for="CurrentPole.IdResponsable" class="form-control">
+        <select asp-for="CurrentPole.IdResponsable" class="form-control select2">
             @foreach (var user in Model.AllUsers)
             {
                 <option value="@user.IdUser">@user.Nom @user.Prenom</option>
@@ -26,7 +26,7 @@
     </div>
     <div class="input-group">
         <label asp-for="CurrentPole.IdAdjoint">Adjoint</label>
-        <select asp-for="CurrentPole.IdAdjoint" class="form-control">
+        <select asp-for="CurrentPole.IdAdjoint" class="form-control select2">
             @foreach (var user in Model.AllUsers)
             {
                 <option value="@user.IdUser">@user.Nom @user.Prenom</option>

@@ -14,7 +14,7 @@
     </div>
     <div class="input-group">
         <label asp-for="DroitUser" >Droit</label>
-        <select asp-for="DroitUser" class="form-control">
+        <select asp-for="DroitUser" class="form-control select2">
             @foreach (var droit in Model.AllDroits)
             {
                 <option value="@droit.IdDroit">@droit.Libelle</option>

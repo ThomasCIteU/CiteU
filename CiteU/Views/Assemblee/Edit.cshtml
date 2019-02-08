@@ -17,7 +17,7 @@
     </div>
     <div class="input-group">
         <label asp-for="CurrentAssemblee.IdPole">Pôle</label>
-        <select asp-for="CurrentAssemblee.IdPole" class="form-control">
+        <select asp-for="CurrentAssemblee.IdPole" class="form-control select2">
             @foreach (var pole in Model.AllPoles)
             {
                 <option value="@pole.IdPole">@pole.Libelle</option>
