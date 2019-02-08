@@ -54,7 +54,7 @@ namespace DatabaseAccess.User
             {
                 string sql = "SELECT U.idUser, U.Nom, U.Prenom, U.Sexe, U.Mail, U.Phone, U.Assemblee, U.Privilege, U.idDroit, U.Mdp " +
                     "FROM user U " +
-                    "LEFT JOIN citeu.assemblee a on a.idassemblee = U.Assemblee " +
+                    "LEFT JOIN assemblee a on a.idassemblee = U.Assemblee " +
                     "WHERE a.IdPole = @idPole";
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@idPole", idPole);

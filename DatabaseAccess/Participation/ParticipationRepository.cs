@@ -58,7 +58,7 @@ namespace DatabaseAccess.Participation
             {
                 string sql = "SELECT U.idUser, U.Nom, U.Prenom, U.Sexe, U.Mail, U.Phone, U.Assemblee, U.Privilege, U.idDroit " +
                     "FROM user U " +
-                    "LEFT JOIN citeu.participation p on p.idUser= U.idUser " +
+                    "LEFT JOIN participation p on p.idUser= U.idUser " +
                     "WHERE p.idReunion = @idReunion";
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
                 cmd.Parameters.AddWithValue("@idReunion", idReunion);
