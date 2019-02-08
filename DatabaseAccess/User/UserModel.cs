@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatabaseAccess.Langue;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -22,5 +23,6 @@ namespace DatabaseAccess.User
         public int Droit { get; set; }
         [Required]
         public string Mdp { get; set; }
+        public List<int> LanguesParlees {get; set;}
     }
 }

@@ -120,6 +120,7 @@ namespace DatabaseAccess.User
                 {
                     throw new Exception("Cet utilisateur n'existe pas");
                 }
+                user.LanguesParlees = GetLanguesParlees(idUser);
                 return user;
             }
             catch (Exception ex)
@@ -168,7 +169,7 @@ namespace DatabaseAccess.User
             }
         }
 
-        public void EditUser(int IdUser, string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege, int Droit, string Mdp)
+        public void EditUser(int IdUser, string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege, int Droit, string Mdp, List<int> languesParlees)
         {
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
@@ -205,6 +206,7 @@ namespace DatabaseAccess.User
             {
                 throw ex;
             }
+            AddAllLanguages(languesParlees, IdUser);
         }
 
         public void DeleteUser(int IdUser)
@@ -228,7 +230,7 @@ namespace DatabaseAccess.User
             }
         }
 
-        public void CreateUser(string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege, int Droit, string Mdp)
+        public void CreateUser(string Nom, string Prenom, char Sexe, string Mail, string Phone, int Assemblee, string Privilege, int Droit, string Mdp, List<int> languesParlees)
         {
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
@@ -258,6 +260,86 @@ namespace DatabaseAccess.User
                 cmd.ExecuteNonQuery();
 
                 cnn.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            if(languesParlees != null)
+            {
+                //Ajouter toutes les langues
+                var usr = GetUser(Mail);
+                AddAllLanguages(languesParlees, usr.IdUser);
+            }
+        }
+
+        public void AddAllLanguages (List<int> langues, int idUser)
+        {
+            if(langues == null)
+            {
+                return;
+            }
+            string sqlDelete = $"DELETE FROM languesparlees WHERE ";
+            //on ajoute les langues
+            foreach (int idlangue in langues)
+            {
+                sqlDelete += $"idLangues <> "+idlangue.ToString()+" AND ";
+                MySqlConnection cnn = BDDRepository.OpenConnexion();
+                try
+                {
+                    string sql = $"INSERT IGNORE INTO languesparlees (idUser, idLangues) VALUES( " +
+                    $"@IdUser, " +
+                    $"@IdLangues)";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                    cmd.Parameters.AddWithValue("@IdUser", idUser);
+                    cmd.Parameters.AddWithValue("@IdLangues", idlangue);
+
+                    cmd.ExecuteNonQuery();
+
+                    cnn.Close();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            //on supprime les langues supprimées
+            MySqlConnection cnn2 = BDDRepository.OpenConnexion();
+            try
+            {
+                sqlDelete += $"idUser = @idUser";
+
+                MySqlCommand cmd = new MySqlCommand(sqlDelete, cnn2);
+                cmd.Parameters.AddWithValue("@IdUser", idUser);
+
+                cmd.ExecuteNonQuery();
+
+                cnn2.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<int> GetLanguesParlees(int idUser)
+        {
+            MySqlConnection cnn = BDDRepository.OpenConnexion();
+            try
+            {
+                string sql = "SELECT idLangues FROM languesparlees WHERE idUser=@idUser";
+                MySqlCommand cmd = new MySqlCommand(sql, cnn);
+                cmd.Parameters.AddWithValue("@idUser", idUser);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                List<int> languesparlees = new List<int>();
+                while (rdr.Read())
+                {
+                    languesparlees.Add(Convert.ToInt16(rdr["idLangues"]));
+                }
+                rdr.Close();
+                cnn.Close();
+                return languesparlees;
             }
             catch (Exception ex)
             {

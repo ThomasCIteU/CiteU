@@ -8,6 +8,7 @@ using DatabaseAccess.Droit;
 using CiteU.Models.Helper;
 using System.Security.Claims;
 using DatabaseAccess.Mail;
+using DatabaseAccess.Langue;
 
 namespace CiteU.Controllers
 {
@@ -18,12 +19,14 @@ namespace CiteU.Controllers
         public readonly IAssembleeRepository _assembleeRepository;
         public readonly IDroitRepository _droitRepository;
         public readonly IMailRepository _mailRepository;
-        public UserController (IUserRepository userRepository, IAssembleeRepository assembleeRepository, IDroitRepository droitRepository, IMailRepository mailRepository)
+        public readonly ILangueRepository _langueRepository;
+        public UserController (IUserRepository userRepository, IAssembleeRepository assembleeRepository, IDroitRepository droitRepository, IMailRepository mailRepository, ILangueRepository langueRepository)
         {
             _userRepository = userRepository;
             _assembleeRepository = assembleeRepository;
             _droitRepository = droitRepository;
             _mailRepository = mailRepository;
+            _langueRepository = langueRepository;
         }
         public void SetViewData()
         {
@@ -84,6 +87,7 @@ namespace CiteU.Controllers
                 CurrentUser = _userRepository.GetUser(IdUser),
                 AllAssemblees = _assembleeRepository.GetAssemblees(),
                 AllDroits = _droitRepository.getAllDroits(),
+                AllLangues = _langueRepository.GetLangues(),
                 IsCreation = false
             };
             return View("edit", vm);
@@ -98,6 +102,7 @@ namespace CiteU.Controllers
             {
                 AllAssemblees = _assembleeRepository.GetAssemblees(),
                 AllDroits = _droitRepository.getAllDroits(),
+                AllLangues = _langueRepository.GetLangues(),
                 IsCreation = true
             };
             return View("edit", vm);
@@ -126,6 +131,7 @@ namespace CiteU.Controllers
                 CurrentUser = _userRepository.GetUser(mailUser),
                 AllAssemblees = _assembleeRepository.GetAssemblees(),
                 AllDroits = _droitRepository.getAllDroits(),
+                AllLangues = _langueRepository.GetLangues(),
                 IsCreation = false
             };
             return View("edit", vm);
@@ -135,7 +141,7 @@ namespace CiteU.Controllers
         public IActionResult Create(UserEditViewModel User)
         {
             var user = User.CurrentUser;
-            _userRepository.CreateUser(user.Nom, user.Prenom, user.Sexe, user.Mail, user.Phone, user.IdAssemblee, user.Privilege, user.Droit, user.Mdp);
+            _userRepository.CreateUser(user.Nom, user.Prenom, user.Sexe, user.Mail, user.Phone, user.IdAssemblee, user.Privilege, user.Droit, user.Mdp, user.LanguesParlees);
 
             return RedirectToAction("Index", "User");
         }
@@ -146,7 +152,7 @@ namespace CiteU.Controllers
         public IActionResult Edit(UserEditViewModel user)
         {
             var usr = user.CurrentUser;
-            _userRepository.EditUser(usr.IdUser, usr.Nom, usr.Prenom, usr.Sexe, usr.Mail, usr.Phone, usr.IdAssemblee, usr.Privilege, usr.Droit, usr.Mdp);
+            _userRepository.EditUser(usr.IdUser, usr.Nom, usr.Prenom, usr.Sexe, usr.Mail, usr.Phone, usr.IdAssemblee, usr.Privilege, usr.Droit, usr.Mdp, usr.LanguesParlees);
 
             return RedirectToAction("Index", "User", usr.IdUser);
         }
@@ -163,7 +169,7 @@ namespace CiteU.Controllers
         [HttpGet]
         public IActionResult InscrireUser(InvitationViewModel user)
         {
-            _userRepository.CreateUser("", "", 'M', user.MailUser, "", 0, "", user.DroitUser, "");
+            _userRepository.CreateUser("", "", 'M', user.MailUser, "", 0, "", user.DroitUser, "", null);
             _mailRepository.SendEmailInscription(user.MailUser);
 
             return RedirectToAction("Index", "User");

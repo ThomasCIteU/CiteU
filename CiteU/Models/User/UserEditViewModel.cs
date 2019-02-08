@@ -1,5 +1,6 @@
 ﻿using DatabaseAccess.Assemblee;
 using DatabaseAccess.Droit;
+using DatabaseAccess.Langue;
 using DatabaseAccess.User;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,6 @@ namespace CiteU.Models.User
         public UserModel CurrentUser {get; set;}
         public List<AssembleeModel> AllAssemblees { get; set; }
         public List<DroitModel> AllDroits { get; set; }
+        public List<LangueModel> AllLangues { get; set; }
     }
 }

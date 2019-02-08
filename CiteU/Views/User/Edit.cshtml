@@ -10,11 +10,11 @@
     {
         <input type="hidden" asp-for="CurrentUser.IdUser" />
     }
-        <div class="input-group">
-            <label asp-for="CurrentUser.Nom">Nom</label>
-            <input asp-for="CurrentUser.Nom" class="form-control" />
-            <br /><span asp-validation-for="CurrentUser.Nom" class="text-danger"></span>
-        </div>
+    <div class="input-group">
+        <label asp-for="CurrentUser.Nom">Nom</label>
+        <input asp-for="CurrentUser.Nom" class="form-control" />
+        <br /><span asp-validation-for="CurrentUser.Nom" class="text-danger"></span>
+    </div>
     <div class="input-group">
         <label asp-for="CurrentUser.Prenom">Prenom</label>
         <input asp-for="CurrentUser.Prenom" class="form-control" />
@@ -43,7 +43,7 @@
         {
             <input asp-for="CurrentUser.Mdp" class="form-control" type="text" readonly />
         }
-        <br/><span asp-validation-for="CurrentUser.Mdp" class="text-danger"></span>
+        <br /><span asp-validation-for="CurrentUser.Mdp" class="text-danger"></span>
 
     </div>
     <div class="input-group">
@@ -67,6 +67,15 @@
         </select>
     </div>
     <div class="input-group">
+        <label asp-for="CurrentUser.LanguesParlees">Langues parlées</label>
+        <select asp-for="CurrentUser.LanguesParlees" class="form-control select2" multiple="multiple">
+            @foreach (var langue in Model.AllLangues)
+            {
+                <option value="@langue.IdLangue">@langue.Nom</option>
+            }
+        </select>
+    </div>
+    <div class="input-group">
         <label asp-for="CurrentUser.IdAssemblee">Assemblée</label>
         <select asp-for="CurrentUser.IdAssemblee" class="form-control select2">
             @foreach (var assemblee in Model.AllAssemblees)
@@ -77,19 +86,19 @@
     </div>
     @if ((bool)ViewData["CanEdit"])
     {
-    <div class="input-group">
-        <label asp-for="CurrentUser.Droit">Droit</label>
-        <select asp-for="CurrentUser.Droit" class="form-control select2">
-            @foreach (var droit in Model.AllDroits)
-            {
-                <option value="@droit.IdDroit">@droit.Libelle</option>
-            }
-        </select>
-    </div>
+        <div class="input-group">
+            <label asp-for="CurrentUser.Droit">Droit</label>
+            <select asp-for="CurrentUser.Droit" class="form-control select2">
+                @foreach (var droit in Model.AllDroits)
+                {
+                    <option value="@droit.IdDroit">@droit.Libelle</option>
+                }
+            </select>
+        </div>
     }
     else
     {
-    <input asp-for="CurrentUser.Droit" type="hidden" />
+        <input asp-for="CurrentUser.Droit" type="hidden" />
     }
 
 
