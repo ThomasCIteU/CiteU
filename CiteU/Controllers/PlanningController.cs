@@ -103,5 +103,16 @@ namespace CiteU.Controllers
             _participationRepository.CreateParticipation(IdReunion, idUser);
             return RedirectToAction("Index", "Planning", new { year = reunion.Date.Year, month = reunion.Date.Month });
         }
+
+        [Authorize(Policy = ClaimCiteU.Proclamateur)]
+        [HttpPost]
+        public IActionResult SupprimerParticipation(int IdReunion)
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            int idUser = ClaimCiteU.getIdUserFromClaim(identity.Claims);
+            var reunion = _ReunionRepository.GetReunion(IdReunion);
+            _participationRepository.DeleteParticipation(IdReunion, idUser);
+            return RedirectToAction("Index", "Planning", new { year = reunion.Date.Year, month = reunion.Date.Month });
+        }
     }
 }

@@ -19,10 +19,10 @@ namespace DatabaseAccess.BDD
             //connetionString = "Server=mysql-ipicoivoir.alwaysdata.net;Database=ipicoivoir_citeu;Uid=153687;Pwd=IPICovoit";
 
             //Connexion OVH WINDOWS
-            //connetionString = "Server=vps630729.ovh.net;Database=citeu;Uid=Administrator;Pwd=7HvB&4s^b?PSWWVtvDGm";
+            connetionString = "Server=vps630729.ovh.net;Database=citeu;Uid=Administrator;Pwd=7HvB&4s^b?PSWWVtvDGm";
 
             //Connexion OVH WINDOWS demociteU
-            connetionString = "Server=vps630729.ovh.net;Database=testciteu;Uid=Administrator;Pwd=7HvB&4s^b?PSWWVtvDGm";
+            //connetionString = "Server=vps630729.ovh.net;Database=testciteu;Uid=Administrator;Pwd=7HvB&4s^b?PSWWVtvDGm";
 
             cnn = new MySqlConnection(connetionString);
             try

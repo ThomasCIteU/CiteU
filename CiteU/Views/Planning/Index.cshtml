@@ -59,6 +59,15 @@
                                         </button>
                                     </form>
                                 }
+                                else
+                                {
+                                    <form asp-controller="Planning" asp-action="SupprimerParticipation" method="post">
+                                        <input type="hidden" name="@nameof(day.Reunion.IdReunion)" value="@day.Reunion.IdReunion" />
+                                        <button type="submit" class="btn btn-default">
+                                            Je ne participe plus
+                                        </button>
+                                    </form>
+                                }
 
                                 <!-- MODAL RESPONSABLE-->
                                 <div id="@day.Reunion.IdReunion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">

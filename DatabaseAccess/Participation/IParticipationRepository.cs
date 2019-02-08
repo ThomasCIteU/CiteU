@@ -9,5 +9,6 @@ namespace DatabaseAccess.Participation
     {
         void CreateParticipation(int idReunion, int idUser);
         List<UserModel> GetUsersByReunion(int idReunion);
+        void DeleteParticipation(int idReunion, int idParticipation);
     }
 }

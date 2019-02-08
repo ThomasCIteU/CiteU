@@ -31,16 +31,17 @@ namespace DatabaseAccess.Participation
             }
         }
 
-        public void DeleteParticipation(int IdParticipation)
+        public void DeleteParticipation(int IdReunion, int IdUser)
         {
             MySqlConnection cnn = BDDRepository.OpenConnexion();
             try
             {
                 string sql = $"Delete from participation " +
-                    $"WHERE idParticipation=@IdParticipation";
+                    $"WHERE idReunion=@IdReunion AND idUser = @IdUser";
 
                 MySqlCommand cmd = new MySqlCommand(sql, cnn);
-                cmd.Parameters.AddWithValue("@IdParticipation", IdParticipation);
+                cmd.Parameters.AddWithValue("@IdReunion", IdReunion);
+                cmd.Parameters.AddWithValue("@IdUser", IdUser);
 
                 cmd.ExecuteNonQuery();
                 cnn.Close();
